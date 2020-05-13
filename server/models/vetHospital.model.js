@@ -8,17 +8,18 @@ const vetHospitalSchema = new Schema(
     email: String,
     password: String,
     profilePicPath: String,
-    phoneNumber: Number,
+    phoneNumber: String,
     rating: {
       type: Number,
-      enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      default: 5
     },
     chiefVetName: String,
     chiefVetSurname: String,
     collegiateNumber: String,
     status: {
       type: String,
-      enum: ["acive", "inactive", "Pending Confirmation"],
+      enum: ["active", "inactive", "Pending Confirmation"],
       default: "Pending Confirmation",
     }, 
     client: [{
