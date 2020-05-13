@@ -12,13 +12,17 @@ const app = express()
 
 // Configs
 require('./configs/middleware.config')(app)
-require('./configs/passport.config')(app)
+// require('./configs/passport.config')(app)
 require('./configs/views.configs')(app)
 require('./configs/locals.config')(app)
 
 // Base URLS
-app.use('/api', require('./routes/auth.routes'))
-app.use('/api', require('./routes/coaster.routes'))
-app.use('/api/files', require('./routes/files.routes'))
+// app.use('/api', require('./routes/auth.routes'))
+// app.use('/api', require('./routes/auth.vetHospital.routes'))
+app.use('/api', require('./routes/citeHospital.routes'))
+app.use('/api', require('./routes/pet.routes'))
+app.use('/api', require('./routes/queryClient.routes'))
+
+// app.use('/api/files', require('./routes/files.routes'))
 
 module.exports = app

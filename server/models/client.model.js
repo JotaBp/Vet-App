@@ -8,7 +8,7 @@ const clientSchema = new Schema({
   password: String,
   profilePicPath: String,
   address: String,
-  phoneNumber: Number,
+  phoneNumber: String,
   status: {
     type: String,
     enum: ["acive", "inactive", "Pending Confirmation"],

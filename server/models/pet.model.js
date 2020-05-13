@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const petSchema = new Schema(   {
         name: String,
         species: String,
-        postPicPath: String,
+        petPicPath: String,
         breed: String,
         owner: {
             type: Schema.Types.ObjectId,

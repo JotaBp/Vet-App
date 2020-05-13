@@ -14,10 +14,10 @@ const citeHospitalSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "VetHospital"
   },
-  queryClient: {
+  queryClient: [{
     type: Schema.Types.ObjectId,
     ref: "QueryClient"
-  }
+  }]
 }, {
   timestamps: true
 })

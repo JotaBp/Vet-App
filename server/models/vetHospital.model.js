@@ -7,11 +7,11 @@ const vetHospitalSchema = new Schema(
     address: String,
     email: String,
     password: String,
-    profilePicPath: String,
+    hospitalPicPath: String,
     phoneNumber: String,
     rating: {
       type: Number,
-      enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      enum: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       default: 5
     },
     chiefVetName: String,

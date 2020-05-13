@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const passport = require("passport")
 
-const User = require("../models/user.model")
+const User = require("../models/client.model")
 const bcrypt = require("bcrypt")
 
 
@@ -23,7 +23,7 @@ router.post('/signup', (req, res, next) => {
         return;
     }
 
-    User.findOne({ username }, (err, foundUser) => {
+    User.findOne({ name: username }, (err, foundUser) => {
 
         if (err) {
             res.status(500).json({ message: "Username check went bad." });
@@ -39,7 +39,7 @@ router.post('/signup', (req, res, next) => {
         const hashPass = bcrypt.hashSync(password, salt);
 
         const aNewUser = new User({
-            username: username,
+            name: username,
             password: hashPass
         });
 
