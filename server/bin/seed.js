@@ -124,7 +124,7 @@ function createQuery() {
 
 //para hacer el primer seed cambiar Promise.all por Promise.resolve
 
-Promise.all([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQueryClient])
+Promise.resolve([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQueryClient])
   
 .then(() => {
     let clients = new Array(clientQuantity).fill(" ")

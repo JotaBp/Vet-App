@@ -1,0 +1,1 @@
+{"version":3,"sources":["PetList.css"],"names":[],"mappings":"AAAA,gBACI,kBACJ,CAEA,cACI,YAAa,CACb,gBACJ","file":"main.e4253f02.chunk.css","sourcesContent":[".pet-list .card{   \n    margin-bottom: 30px;\n}\n\n.pet-list img {\n    height: 160px;\n    object-fit: cover;\n}"]}
