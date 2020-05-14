@@ -31,6 +31,11 @@ class Navigation extends Component {
                         <Nav.Link as="div"><Link to="/">Inicio</Link></Nav.Link>
                         <Nav.Link as="div"><Link to="/pets">Mascotas</Link></Nav.Link>
 
+
+
+                        <Nav.Link as="div"><Link to="/vetHospital">Para clinicas Veterianrias</Link></Nav.Link>
+                        <Nav.Link as="div"><Link to="/client">Para tu mascota</Link></Nav.Link>
+
                         {/* {
                             !this.props.loggedInUser ?
                                 <>

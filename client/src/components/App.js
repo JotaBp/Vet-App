@@ -7,6 +7,7 @@ import './App.css'
 
 import Navigation from './ui/navbar/Navbar'
 import PetsList from './pages/pets/pets-List/PetsList'
+import HomePage from './pages/homePage/HomePage'
 // import CoasterList from './pages/coaster-list/CoasterList'
 // import CoasterDetails from './pages/coaster-details/CoasterDetails'
 // import Signup from './pages/signup/Signup'
@@ -47,6 +48,7 @@ class App extends Component {
         <main>
 
           <Switch>
+            <Route path="/" exact render= {() => <HomePage/> } />
             <Route path="/pets" render= {() => <PetsList/>} />
             {/* <Route path="/coasters" exact render={() => <CoasterList loggedInUser={this.state.loggedInUser} />} />
             <Route path="/coasters/:coasterId" render={props => <CoasterDetails {...props} />} />
