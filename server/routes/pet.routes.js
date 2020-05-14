@@ -3,6 +3,11 @@ const router = express.Router()
 
 const Pet = require("../models/pet.model")
 
+router.get('/allPets', (req, res, next) => {
+    Pet.find()
+        .then(data => res.json(data))
+        .catch(err => next(new Error(err)))
+})
 
 //Muestra las mascotas del hospital
 router.get('/petsFromHospital/:idHospital', (req, res, next) => {

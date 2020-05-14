@@ -12,7 +12,8 @@ const app = express()
 
 // Configs
 require('./configs/middleware.config')(app)
-// require('./configs/passport.config')(app)
+require('./configs/passportVetHospital.config')(app)
+require('./configs/passportClient.config')(app)
 require('./configs/views.configs')(app)
 require('./configs/locals.config')(app)
 

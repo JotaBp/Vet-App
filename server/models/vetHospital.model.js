@@ -22,10 +22,6 @@ const vetHospitalSchema = new Schema(
       enum: ["active", "inactive", "Pending Confirmation"],
       default: "Pending Confirmation",
     }, 
-    client: [{
-      type: Schema.Types.ObjectId,
-      ref: "Client"
-    }],
     pet: [{
       type: Schema.Types.ObjectId,
       ref: "Pet"

@@ -84,11 +84,7 @@ function createHospital() {
     chiefVetSurname: faker.name.lastName(),
     collegiateNumber: faker.random.number(),
     status: "active",
-    client: [
-      allClients[randomNum(allClients.length)]._id, allClients[randomNum(allClients.length)]._id,
-      allClients[randomNum(allClients.length)]._id, allClients[randomNum(allClients.length)]._id,
-      allClients[randomNum(allClients.length)]._id, allClients[randomNum(allClients.length)]._id
-    ],
+
 
     pet: [
       allPets[randomNum(allPets.length)]._id, allPets[randomNum(allPets.length)]._id, 
@@ -176,14 +172,7 @@ Promise.all([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQueryCl
 
     hospitalsCreated.forEach(hospital => {
 
-      updatedClient = Client.findByIdAndUpdate(hospital.client, {
-        $push: {
-          vetHospital: hospital._id
-        }
-      }, {
-        new: true
-      })
-      updatedPet = Pet.findByIdAndUpdate(hospital.pet, {
+      return Pet.findByIdAndUpdate(hospital.pet, {
         $push: {
           vetHospital: hospital._id
         }
@@ -191,8 +180,7 @@ Promise.all([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQueryCl
         new: true
       })
     })
-    return Promise.all([updatedClient, updatedPet])
-    // return Promise.all(updatedPet)
+
   })
 
   .then(() => {

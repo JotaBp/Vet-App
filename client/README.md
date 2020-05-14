@@ -4,20 +4,23 @@
 Referencia endpoints frontend
 
 
-Id  | Method |   Path                         |   Description
---- | ------ | ------------------------------ |  ------------------------------------------
-1   |  get   | /                              | Muestra la página principal 
-3   |  get   | /contact                       | Muestra el formulario de contacto 
-19  |  get   | /signup                        | Muestra el formulario para registrarse 
-21  |  get   | /login                         | Muestra el formulario para loguearse 
-1   |  get   | /vetHospital                   | Muestra las clinicas veterinarias (consulta a getAllVetHospital)
-3   |  get   | /indexVetHospital              | Muestra la informacion relevante para la clinica, como las citas,los mensajes recibidos
-7   |  get   | /indexVetHospital/client       | Muestra una lista de clientes (para la pagina del indexVetHospital)
-24  |  get   | /indexVetHospital/citeHospital | Muestra las citas dadas por la clinica
-31  |  get   | /indexVetHospital/queryClient  | Muestra las consultas de los clientes
-3   |  get   | /indexClient                   | Muestra la informacion relevante para el cliente, como las citas
-31  |  get   | /indexClient/queryClient       | Muestra las consultas del cliente
-8   |  get   | /profile/:id                   | Muestra el perfil del usuario, sea cliente o clinica
+Id  |   Path                         |   Description
+--- | ------------------------------ |  ------------------------------------------
+1   | /                              | Muestra la página principal 
+3   | /contact                       | Muestra el formulario de contacto 
+19  | /signup                        | Muestra el formulario para registrarse 
+21  | /login                         | Muestra el formulario para loguearse 
+1   | /vetHospital                   | Muestra las clinicas veterinarias (consulta a getAllVetHospital)
+3   | /indexVetHospital              | Muestra la informacion relevante para la clinica, como las citas,los mensajes recibidos
+7   | /indexVetHospital/client       | Muestra una lista de clientes (para la pagina del indexVetHospital)
+24  | /indexVetHospital/citeHospital | Muestra las citas dadas por la clinica
+31  | /indexVetHospital/queryClient  | Muestra las consultas de los clientes
+3   | /indexClient                   | Muestra la informacion relevante para el cliente, como las citas
+31  | /indexClient/queryClient       | Muestra las consultas del cliente
+8   | /profile/:id                   | Muestra el perfil del usuario, sea cliente o clinica
+    | /indexClient/pets
+    | /indexClient/petDetails/:id
+    |
 
 
 
