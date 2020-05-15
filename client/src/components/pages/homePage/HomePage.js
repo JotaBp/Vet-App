@@ -6,16 +6,18 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Figure from 'react-bootstrap/Figure'
 import FigureImage from 'react-bootstrap/FigureImage'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 
 const HomePage = () => {
     return (
         <>
 
-            <Container as="section">
+            <Container as="section" className="evolution">
 
-                <Row>
-                    <Col as="article" lg={3} md={6}>
+                <Row className="justify-content-center">
+                    <Col as="article" lg={6} md={6}>
 
 
                         <Figure>
@@ -33,7 +35,7 @@ const HomePage = () => {
 
                     </Col>
 
-                    <Col as="article" lg={3} md={6}>
+                    <Col as="article"  lg={6} md={6}>
                         <h1>Evoluciona</h1>
 
                         <p>Vet App es el futuro de la gestión veterinaria.
@@ -47,11 +49,11 @@ const HomePage = () => {
 
             </Container>
 
-            <Container as="section">
+            <Container as="section" className="fast">
 
-                <Row>
+                <Row className="justify-content-center">
 
-                    <Col as="article" lg={3} md={6}>
+                    <Col as="article"  lg={6} md={6}>
 
                         <h2>Rápido y Sencillo</h2>
                         <p>Vet App es tan intuitivo que aprenderás a manejarlo en minutos.
@@ -59,7 +61,7 @@ const HomePage = () => {
                         y la información llegue a ti de manera simple y bien estructurada.</p>
 
                     </Col>
-                    <Col as="article" lg={3} md={6}>
+                    <Col as="article" lg={6} md={6}>
 
                         <Figure>
 
@@ -78,10 +80,10 @@ const HomePage = () => {
 
             </Container>
 
-            <Container as="section">
+            <Container as="section" className="secure">
 
-                <Row>
-                    <Col as="article" lg={3} md={6}>
+                <Row className="justify-content-center">
+                    <Col as="article" lg={6} md={6}>
 
 
                         <Figure>
@@ -97,7 +99,7 @@ const HomePage = () => {
 
                     </Col>
 
-                    <Col as="article" lg={3} md={6}>
+                    <Col as="article" className="align-content" lg={6} md={6}>
 
                         <h2>Seguro y Fiable</h2>
 
@@ -112,11 +114,11 @@ const HomePage = () => {
 
             </Container>
 
-            <Container as="section">
+            <Container as="section" className="forYou">
 
-                <Row>
+                <Row className="justify-content-center">
 
-                    <Col as="article" lg={3} md={6}>
+                    <Col as="article" lg={6} md={6}>
 
                         <h2> Vet App es Para Ti </h2>
 
@@ -125,7 +127,7 @@ const HomePage = () => {
                         Te acompañamos en cada paso hacia el éxito de tu negocio.</p>
 
                     </Col>
-                    <Col as="article" lg={3} md={6}>
+                    <Col as="article" lg={6} md={6}>
 
                         <img alt="" />
                         <Figure>
@@ -148,8 +150,8 @@ const HomePage = () => {
 
             <Container as="footer">
 
-                <Row>
-                    <Col as="article" lg={3} md={6}>
+                <Row className="justify-content-center">
+                    <Col as="article" lg={4} md={4} sm={4}>
                         <Figure>
 
                             <FigureImage
@@ -168,7 +170,7 @@ const HomePage = () => {
 
                     </Col>
 
-                    <Col as="article" lg={3} md={6}>
+                    <Col as="article" lg={4} md={4} sm={4}>
 
                         <p>Vet App es un software online de gestión de centros veterinarios
                         totalmente orientado a conseguir que tu equipo pueda trabajar de una forma ágil y coordinada,
@@ -176,7 +178,20 @@ const HomePage = () => {
 
                     </Col>
 
-                    <Col as="article" lg={3} md={6}>
+                    <Col as="article" lg={4} md={4} sm={4}>
+                        <Form  >
+                            <Form.Group controlId="email">
+                                <Form.Control name="email" type="email" placeholder="Tu email" />
+                            </Form.Group>
+                            <Form.Group controlId="phoneNumber">
+                                <Form.Control name="phoneNumber" type="text" placeholder="Telefono de contacto" />
+                            </Form.Group>
+                            <Form.Group controlId="message">
+                                <Form.Control name="description" type="text" placeholder="Mensaje" />
+                            </Form.Group>
+                            <Button variant="info" type="submit">Enviar</Button>
+
+                        </Form>
 
                     </Col>
 
