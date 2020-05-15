@@ -37,7 +37,7 @@ render() {
 
 
             <Row className="pet-list">
-                {this.state.pets.map(pet => <PetCard key={pet._id} {...pet} />)}
+                {this.state.pets && this.state.pets.map(pet => <PetCard key={pet._id} {...pet} />)}
             </Row>
 
 
