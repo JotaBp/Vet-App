@@ -4,7 +4,7 @@ export default class Services {
 
     constructor() {
         this.service = axios.create({
-            baseURL: 'http://localhost:5000/api/files',
+            baseURL: 'https://veterinary-app.herokuapp.com/api/files',
             withCredentials: true
         })
     }
