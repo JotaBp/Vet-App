@@ -12,7 +12,6 @@ router.post('/client/signup', (req, res, next) => {
     const username = req.body.name;
     const password = req.body.password;
 
-    
 
 
     if (!username || !password) {
