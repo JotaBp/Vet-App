@@ -28,6 +28,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact render= {() => <HomePage/> } />
             <Route path="/pets" render= {() => <PetsList/>} />
+            <Route path=""/>
           </Switch>
 
         </main>
