@@ -12,7 +12,7 @@ class PetsList extends Component {
 
 constructor() {
     super()
-    this.state = { pets: [] }
+    this.state = { pets:null }
     this.petService = new PetService()
 }
 
@@ -30,6 +30,7 @@ componentDidMount = () => {
 
 
 render() {
+    console.log(this.state)
     return (
         <Container as="section">
 

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const clientSchema = new Schema({
+const userSchema = new Schema({
   name: String,
   surname: String,
   email: String,
@@ -11,9 +11,19 @@ const clientSchema = new Schema({
   phoneNumber: String,
   status: {
     type: String,
-    enum: ["acive", "inactive", "Pending Confirmation"],
+    enum: ["active", "inactive", "Pending Confirmation"],
     default: "Pending Confirmation",
   },
+  rating: {
+    type: Number,
+    min: 0,
+    max:10,
+    default: 5
+  },
+  hospitalPicPath: String,
+  chiefVetName: String,
+  chiefVetSurname: String,
+  collegiateNumber: String,
   pets: [{
     type: Schema.Types.ObjectId,
     ref: "Pet"
@@ -22,19 +32,21 @@ const clientSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "QueryClient"
   }],
-  vetHospital: [{
-    type: Schema.Types.ObjectId,
-    ref: "VetHospital"
-  }],
   citeHospital: [{
     type: Schema.Types.ObjectId,
     ref: "CiteHospital"
-  }]
+  }],
+  role: {
+    type: String,
+    enum: ['VETHOSPITAL', 'CLIENT', 'GUEST'],
+    required: true,
+    default: 'GUEST'
+}
 
 }, {
   timestamps: true,
 });
 
-const Client = mongoose.model("Client", clientSchema);
+const User = mongoose.model("User", userSchema);
 
-module.exports = Client;
+module.exports = User;

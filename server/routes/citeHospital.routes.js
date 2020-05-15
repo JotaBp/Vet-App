@@ -4,13 +4,13 @@ const router = express.Router()
 const CiteHospital = require("../models/citeHospital.model")
 
 
-//Muestra las cita del hospital
-router.get('/citesFromHospital/:idHospital', (req, res, next) => {
+//Muestra las cites del hospital
+router.get('/citesFromUser/:idUser', (req, res, next) => {
     CiteHospital.find({vetHospital: req.params.idHospital})
         .then(data => res.status(200).json(data))
         .catch(err => next(new Error(err)))
 })
-//Muestra las cita de la mascota
+//Muestra las cites de la mascota
 router.get('/citesFromPet/:idPet', (req, res, next) => {
     CiteHospital.find({pet: req.params.idPet})
         .then(data => res.status(200).json(data))

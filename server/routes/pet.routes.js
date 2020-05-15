@@ -9,16 +9,9 @@ router.get('/allPets', (req, res, next) => {
         .catch(err => next(new Error(err)))
 })
 
-//Muestra las mascotas del hospital
-router.get('/petsFromHospital/:idHospital', (req, res, next) => {
-    Pet.find({vetHospital: req.params.idHospital})
-        .then(data => res.json(data))
-        .catch(err => next(new Error(err)))
-})
-
-//Muestra las mascotas de cada cliente
-router.get('/petsFromClient/:idClient', (req, res, next) => {
-    Pet.find({owner: req.params.idClient})
+//Muestra las mascotas del Usuario
+router.get('/petsFromUser/:idUser', (req, res, next) => {
+    Pet.find({vetHospital: req.params.idUser})
         .then(data => res.json(data))
         .catch(err => next(new Error(err)))
 })

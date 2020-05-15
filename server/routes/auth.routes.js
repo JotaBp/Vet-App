@@ -1,13 +1,13 @@
 const express = require("express")
 const router = express.Router()
-const passport = require("passportClient.config")
+const passport = require("passport")
 
-const Client = require("../models/client.model")
+cUser = require("../models/user.model")
 const bcrypt = require("bcrypt")
 
 
 
-router.post('/client/signup', (req, res, next) => {
+router.post('/signup', (req, res, next) => {
 
     const username = req.body.name;
     const password = req.body.password;
@@ -24,7 +24,7 @@ router.post('/client/signup', (req, res, next) => {
         return;
     }
 
-    Client.findOne({ name: username }, (err, foundUser) => {
+    User.findOne({ name: username }, (err, foundUser) => {
 
         if (err) {
             res.status(500).json({ message: "Username check went bad." });
@@ -39,7 +39,7 @@ router.post('/client/signup', (req, res, next) => {
         const salt = bcrypt.genSaltSync(10);
         const hashPass = bcrypt.hashSync(password, salt);
 
-        const aNewUser = new Client({
+        const aNewUser = new User({
             name: username,
             password: hashPass
         });
@@ -72,7 +72,7 @@ router.post('/client/signup', (req, res, next) => {
 
 
 
-router.post('/client/login', (req, res, next) => {
+router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, theUser, failureDetails) => {
         if (err) {
             res.status(500).json({ message: 'Something went wrong authenticating user' });
@@ -101,14 +101,14 @@ router.post('/client/login', (req, res, next) => {
 
 
 
-router.post('/client/logout', (req, res, next) => {
+router.post('/logout', (req, res, next) => {
     // req.logout() is defined by passport
     req.logout();
     res.status(200).json({ message: 'Log out success!' });
 });
 
 
-router.get('/client/loggedin', (req, res, next) => {
+router.get('/loggedin', (req, res, next) => {
     // req.isAuthenticated() is defined by passport
     if (req.isAuthenticated()) {
         res.status(200).json(req.user);

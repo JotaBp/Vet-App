@@ -8,7 +8,7 @@ const petSchema = new Schema(   {
         breed: String,
         owner: {
             type: Schema.Types.ObjectId,
-            ref: "Client"
+            ref: "User"
         },
         queryClient: [{
             type: Schema.Types.ObjectId,
@@ -16,7 +16,7 @@ const petSchema = new Schema(   {
         }],
         vetHospital: [{
             type: Schema.Types.ObjectId,
-            ref: "VetHospital"
+            ref: "User"
         }],
         citeHospital: [{
             type: Schema.Types.ObjectId,

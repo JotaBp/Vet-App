@@ -10,28 +10,24 @@ const bcrypt = require('bcrypt')
 const bcryptSalt = 10
 const salt = bcrypt.genSaltSync(bcryptSalt)
 
-const Client = require('../models/client.model')
+const User = require('../models/user.model')
 const Pet = require('../models/pet.model')
-const VetHospital = require('../models/vetHospital.model')
 const CiteHospital = require('../models/citeHospital.model')
 const QueryClient = require('../models/queryClient.model')
 
-const dropClient = Client.collection.drop()
+const dropUser = User.collection.drop()
 const dropPet = Pet.collection.drop()
-const dropVetHospital = VetHospital.collection.drop()
 const dropCiteHospital = CiteHospital.collection.drop()
 const dropQueryClient = QueryClient.collection.drop()
 
 const vetHospitalQuantity = 10
-const petQuantity = 50
+const petQuantity = 30
 const clientQuantity = 30
-const citeHospitalQuantity = 100
-const queryClientQuantity = 150
+const citeHospitalQuantity = 50
+const queryClientQuantity = 80
 
+const randomNum = (max) => Math.floor(Math.random() * (max))
 
-
-const randomNum = (max) => Math.floor(Math.random() * (max - 1))
-// const randomNum = (max => Math.floor(Math.random() * (max - 1)))
 
 let allClients = []
 let allVetHospitals = []
@@ -49,11 +45,11 @@ function createClient() {
     profilePicPath: faker.image.avatar(),
     address: faker.address.streetAddress(),
     phoneNumber: faker.phone.phoneNumber(),
-    status: "acive",
+    status: "active",
     pets: [],
     queryClient: [],
-    vetHospital: [],
-    citeHospital: []
+    citeHospital: [],
+    role: "CLIENT"
   }
 }
 
@@ -73,7 +69,7 @@ function createPet() {
 
 function createHospital() {
   return {
-    hospitalName: faker.name.firstName(),
+    name: faker.company.companyName(),
     address: faker.address.streetAddress(),
     email: faker.internet.email(),
     password: bcrypt.hashSync('123', salt),
@@ -84,15 +80,12 @@ function createHospital() {
     chiefVetSurname: faker.name.lastName(),
     collegiateNumber: faker.random.number(),
     status: "active",
-
-
-    pet: [
-      allPets[randomNum(allPets.length)]._id, allPets[randomNum(allPets.length)]._id, 
-      allPets[randomNum(allPets.length)]._id,allPets[randomNum(allPets.length)]._id,
-      allPets[randomNum(allPets.length)]._id,allPets[randomNum(allPets.length)]._id
+    pets: [
+      allPets[randomNum(allPets.length)]._id, allPets[randomNum(allPets.length)]._id,
     ],
     citeHospital: [],
-    queryClient: []
+    queryClient: [],
+    role: "VETHOSPITAL"
 
     //aquí configuramos todo el faker con las propiedades que debe tener el hospital
     //ojo, hacer un random de allPets para añadirle pets a cada hospital
@@ -107,7 +100,7 @@ function createCite() {
     date: faker.date.future(),
     queryClient: [],
     vetHospital: allVetHospitals[randomNum(allVetHospitals.length)]._id,
-    
+
   }
 }
 
@@ -124,12 +117,12 @@ function createQuery() {
 
 //para hacer el primer seed cambiar Promise.all por Promise.resolve
 
-Promise.resolve([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQueryClient])
-  
-.then(() => {
+Promise.resolve([dropUser, dropPet, dropCiteHospital, dropQueryClient])
+
+  .then(() => {
     let clients = new Array(clientQuantity).fill(" ")
       .map(user => user = createClient())
-    return Client.create(clients)
+    return User.create(clients)
   })
 
   .then(clientsCreated => {
@@ -142,10 +135,11 @@ Promise.resolve([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQue
   })
 
   .then(petsCreated => {
+    console.log(petsCreated)
     allPets = petsCreated
     let allPromises = []
     petsCreated.forEach(pet => {
-      allPromises.push(Client.findByIdAndUpdate(pet.owner, {
+      allPromises.push(User.findByIdAndUpdate(pet.owner, {
         $push: {
           pets: pet._id
         }
@@ -160,27 +154,27 @@ Promise.resolve([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQue
     allClients = updatedClients
     let hospitals = new Array(vetHospitalQuantity).fill(" ").map(vetClinic =>
       vetClinic = createHospital())
-    return VetHospital.create(hospitals)
+    return User.create(hospitals)
   })
 
   .then(hospitalsCreated => {
-
+    console.log(hospitalsCreated)
     allVetHospitals = hospitalsCreated
-
-    let updatedClient
-    let updatedPet
-
+    let promises = []
     hospitalsCreated.forEach(hospital => {
-
-      return Pet.findByIdAndUpdate(hospital.pet, {
+      hospital.pets.forEach(pet => {
+        promises.push( Pet.findByIdAndUpdate(pet._id, {
         $push: {
           vetHospital: hospital._id
-        }
-      }, {
-        new: true
+          }
+        }, {
+          new: true
+        })
+        )
       })
-    })
 
+    })
+      return Promise.all(promises)
   })
 
   .then(() => {
@@ -188,29 +182,30 @@ Promise.resolve([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQue
       cite = createCite())
     return CiteHospital.create(citeHospitals)
   })
-
   .then(citesCreated => {
     allCiteHospitals = citesCreated
-    let updatedHospital
-    let updatedPet
+    let promises = []
+
+
 
     citesCreated.forEach(cite => {
-      updatedHospital = VetHospital.findByIdAndUpdate(cite.vetHospital, {
+      promises.push(User.findByIdAndUpdate(cite.vetHospital, {
+        $push: {
+          citeHospital: cite._id,
+          pets: cite.pet,
+        }
+      }, {
+        new: true
+      }))
+      promises.push(Pet.findByIdAndUpdate(cite.pet, {
         $push: {
           citeHospital: cite._id
         }
       }, {
         new: true
-      })
-      updatedPet = Pet.findByIdAndUpdate(cite.pet, {
-        $push: {
-          citeHospital: cite._id
-        }
-      }, {
-        new: true
-      })
+      }))
     })
-    return Promise.all([updatedHospital, updatedPet])
+    return Promise.all(promises)
   })
   .then(() => {
     let queryClient = new Array(queryClientQuantity).fill(" ")
@@ -223,38 +218,35 @@ Promise.resolve([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQue
 
     allQueryClients = queriesCreated
 
-    let updatedHospital
-    let updatedPet
+    let promises = []
 
     queriesCreated.forEach(query => {
 
-      updatedHospital = VetHospital.findByIdAndUpdate(query.vetHospital, {
+      promises.push(User.findByIdAndUpdate(query.vetHospital, {
         $push: {
           queryClient: query._id
         }
       }, {
         new: true
-      })
+      }))
 
-      updatedPet = Pet.findByIdAndUpdate(query.pet, {
+      promises.push(Pet.findByIdAndUpdate(query.pet, {
         $push: {
           queryClient: query._id
         }
       }, {
         new: true
-      })
+      }))
 
 
     })
-    return Promise.all([updatedHospital, updatedPet])
+    return Promise.all(promises)
   })
 
   .then(() => {
     let promises = []
-    console.log("las allcitehospitals son: " + allCiteHospitals)
     allCiteHospitals.forEach((cite, idx) => {
-
-      if (idx % 3 === 0) {
+      if (idx % 2 === 0) {
         promises.push(CiteHospital.findByIdAndUpdate(cite._id, {
           queryClient: allQueryClients[randomNum(allQueryClients.length)]._id
         }, {
@@ -267,15 +259,17 @@ Promise.resolve([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQue
   .then(updatedCites => {
     let promises = []
     console.log(updatedCites)
-    promises.push(updatedCites.forEach(cite => {
-      console.log("que hay en cite:" + cite)
-      console.log("que hay en cite.pet:" + cite.pet)
-      console.log("que hay en cite.vetHospital:" + cite.vetHospital)
-      QueryClient.findByIdAndUpdate(cite.queryClient, {
+    updatedCites.forEach(cite => {
+
+      // console.log("que hay en cite:" + cite)
+      // console.log("que hay en cite.pet:" + cite.pet)
+      // console.log("que hay en cite.vetHospital:" + cite.vetHospital)
+
+      promises.push(QueryClient.findByIdAndUpdate(cite.queryClient, {
         pet: cite.pet,
         vetHospital: cite.vetHospital
-      })
-    }))
+      }))
+    })
     return Promise.all(promises)
   })
   .then(() => console.log(">>>>>>>>>>>>>>>>>>>>>>Exito!!!"))
@@ -298,11 +292,3 @@ Promise.resolve([dropClient, dropPet, dropVetHospital, dropCiteHospital, dropQue
   // a las que les asignas un random Client con su mascota y contenido Lorem
   // })
   .catch(err => console.log(`An error occurred while creating the CLIENT: ${err}`))
-
-
-
-
-
-
-
-
