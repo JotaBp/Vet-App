@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AuthService from './../../../service/auth.service'
+import AuthService from '../../../service/auth.service'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -15,9 +15,11 @@ class Signup extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            loginInfo: {
+            signUpInfo: {
                 username: '',
-                password: ''
+                email: '',
+                password: '',
+                role: '' 
             },
             errorMessage: ''
         }
@@ -27,16 +29,18 @@ class Signup extends Component {
 
     handleInputChange = e => {
 
-        let loginInfoCopy = { ...this.state.loginInfo }
+        let signUpInfoCopy = { ...this.state.signUpInfo }
         const { name, value } = e.target
-        loginInfoCopy = { ...loginInfoCopy, [name]: value }
+        signUpInfoCopy = { ...signUpInfoCopy, [name]: value }
 
-        this.setState({ loginInfo: loginInfoCopy })
+        this.setState({ signUpInfo: signUpInfoCopy })
     }
+
+
 
     handleSubmit = e => {
         e.preventDefault()
-        this.authService.signup(this.state.loginInfo)
+        this.authService.signup(this.state.signUpInfo)
             .then(response => {
                 this.props.setTheUser(response.data)
                 this.props.history.push('/')
@@ -63,6 +67,20 @@ class Signup extends Component {
                             <Form.Group controlId="name">
                                 <Form.Label>Usuario</Form.Label>
                                 <Form.Control name="username" type="text" value={this.state.username} onChange={this.handleInputChange} />
+                            </Form.Group>
+
+                            <Form.Group controlId="email">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control name="email" type="email" value={this.state.email} onChange={this.handleInputChange} />
+                            </Form.Group>
+
+                            <Form.Group controlId="formBasicCheckbox">
+                                <Form.Label>Que eres?</Form.Label>
+                                <Form.Control as="select" name="role" value={this.state.role} onChange={this.handleInputChange}>
+                                    <option defaultValue="GUEST">Invitado</option>
+                                    <option value="VETHOSPITAL">Hospital Veterinario</option>
+                                    <option value="CLIENT">Mascotero</option>
+                                </Form.Control>
                             </Form.Group>
 
                             <Form.Group controlId="pwd">

@@ -20,11 +20,11 @@ const dropPet = Pet.collection.drop()
 const dropCiteHospital = CiteHospital.collection.drop()
 const dropQueryClient = QueryClient.collection.drop()
 
-const vetHospitalQuantity = 10
-const petQuantity = 30
-const clientQuantity = 30
-const citeHospitalQuantity = 50
-const queryClientQuantity = 80
+const vetHospitalQuantity = 15
+const petQuantity = 60
+const clientQuantity = 35
+const citeHospitalQuantity = 100
+const queryClientQuantity = 175
 
 const randomNum = (max) => Math.floor(Math.random() * (max))
 
@@ -38,7 +38,7 @@ let allPets = []
 function createClient() {
   return {
 
-    name: faker.name.firstName(),
+    username: faker.name.firstName(),
     surname: faker.name.lastName(),
     email: faker.internet.email(),
     password: bcrypt.hashSync('123', salt),
@@ -69,7 +69,7 @@ function createPet() {
 
 function createHospital() {
   return {
-    name: faker.company.companyName(),
+    username: faker.company.companyName(),
     address: faker.address.streetAddress(),
     email: faker.internet.email(),
     password: bcrypt.hashSync('123', salt),

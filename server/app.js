@@ -12,17 +12,16 @@ const app = express()
 
 // Configs
 require('./configs/middleware.config')(app)
-require('./configs/passportVetHospital.config')(app)
-require('./configs/passportClient.config')(app)
+require('./configs/passport.config')(app)
 require('./configs/views.configs')(app)
 require('./configs/locals.config')(app)
 
 // Base URLS
-// app.use('/api', require('./routes/auth.routes'))
-// app.use('/api', require('./routes/auth.vetHospital.routes'))
-app.use('/api', require('./routes/citeHospital.routes'))
-app.use('/api', require('./routes/pet.routes'))
-app.use('/api', require('./routes/queryClient.routes'))
+app.use('/api', require('./routes/auth.routes'))
+app.use('/api/cite', require('./routes/citeHospital.routes'))
+app.use('/api/pet', require('./routes/pet.routes'))
+app.use('/api/query', require('./routes/queryClient.routes'))
+app.use('/api/profile', require('./routes/profile.routes'))
 
 // app.use('/api/files', require('./routes/files.routes'))
 

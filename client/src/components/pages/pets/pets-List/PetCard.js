@@ -3,6 +3,9 @@ import React from 'react'
 
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
+
+import { Link } from 'react-router-dom'
 
 
 const PetCard = props => {
@@ -14,6 +17,7 @@ const PetCard = props => {
                 <Card.Body>
                     <Card.Title>{props.name}</Card.Title>
                 </Card.Body>
+                <Button variant="dark"><Link to="">Detalles</Link></Button>
             </Card>
         </Col>
         

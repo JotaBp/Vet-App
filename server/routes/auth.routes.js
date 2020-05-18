@@ -2,20 +2,21 @@ const express = require("express")
 const router = express.Router()
 const passport = require("passport")
 
-cUser = require("../models/user.model")
+const User = require("../models/user.model")
+
 const bcrypt = require("bcrypt")
+const bcryptSalt = 10
 
 
 
 router.post('/signup', (req, res, next) => {
 
-    const username = req.body.name;
-    const password = req.body.password;
+    const { username, password, email, role } = req.body
 
+    console.log(`console log req.body${req.body}`)
 
-
-    if (!username || !password) {
-        res.status(400).json({ message: 'Provide username and password' });
+    if (!username || !password || !email) { 
+        res.status(400).json({ message: 'Provide all data to signup' });
         return;
     }
 
@@ -24,9 +25,10 @@ router.post('/signup', (req, res, next) => {
         return;
     }
 
-    User.findOne({ name: username }, (err, foundUser) => {
+    User.findOne({ username }, (err, foundUser) => {
 
-        if (err) {
+
+        if (err) { 
             res.status(500).json({ message: "Username check went bad." });
             return;
         }
@@ -36,15 +38,17 @@ router.post('/signup', (req, res, next) => {
             return;
         }
 
-        const salt = bcrypt.genSaltSync(10);
+        const salt = bcrypt.genSaltSync(bcryptSalt);
         const hashPass = bcrypt.hashSync(password, salt);
 
         const aNewUser = new User({
-            name: username,
-            password: hashPass
+            username,
+            email,
+            password: hashPass,
+            role
         });
 
-        aNewUser.save(err => {
+        aNewUser.save(err => {console.log(err)
             if (err) {
                 res.status(400).json({ message: 'Saving user to database went wrong.' });
                 return;
@@ -74,6 +78,8 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, theUser, failureDetails) => {
+
+        
         if (err) {
             res.status(500).json({ message: 'Something went wrong authenticating user' });
             return;
