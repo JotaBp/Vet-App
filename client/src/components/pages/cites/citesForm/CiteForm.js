@@ -14,11 +14,17 @@ class CiteForm extends Component {
             subject: '',
             description: '',
             date: '',
+            vetHospital: '',
+            pet: '',
             //Además hay que unirlo a un pet, de los qu tiene el hospital
             // entre sus clientes
             //tambien a la query si la cite es una respuesta a una consulta
         }
         this.citeService = new CiteService()
+    }
+
+    displayPets = e => {
+        return this.props.pets.map( pet=> <option value={pet._id}>{pet.name}</option>)
     }
 
 
@@ -32,11 +38,14 @@ class CiteForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        this.citeService.citeCreate(this.state)
+        let newCite = {...this.state}
+        newCite.vetHospital = this.props.hospitalID
+        this.citeService.createCite(newCite)
             .then(() => this.props.finishCitePost())
             .catch(err => console.log(err))
     }
 
+    
     render() {
         return (
             <Container>
@@ -53,9 +62,12 @@ class CiteForm extends Component {
                         <Form.Control name="description" type="text" value={this.state.description} onChange={this.handleInputChange} />
                     </Form.Group>
                     <Form.Group controlId="date">
-                        <Form.Label>Inversiones</Form.Label>
+                        <Form.Label>Dia de la cita</Form.Label>
                         <Form.Control name="date" type="date" value={this.state.date} onChange={this.handleInputChange} />
                     </Form.Group>
+                    <select name="pet" onChange={this.handleInputChange}>
+                        {this.displayPets()}
+                    </select>
                     {/* <Form.Group controlId="img">
                         <Form.Label>Imagen (URL)</Form.Label>
                         <Form.Control name="imageUrl" type="text" value={this.state.imageUrl} onChange={this.handleInputChange} />

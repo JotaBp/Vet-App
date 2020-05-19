@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import './Dashboard.css'
 
-import CiteService from './../../../service/cite.service'
-import QueryService from './../../../service/query.service'
+import CiteService from '../../../../service/cite.service'
+import QueryService from '../../../../service/query.service'
 
 
-import CiteCard from '../cites/citesCard/CiteCard'
-import QueryCard from '../query/queryCard/QueryCard'
-import CiteForm from '../cites/citesForm/CiteForm'
+import CiteCard from '../../cites/citesCard/CiteCard'
+import QueryCard from '../../query/queryCard/QueryCard'
+import CiteForm from '../../cites/citesForm/CiteForm'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -22,7 +21,7 @@ import Modal from 'react-bootstrap/Modal'
 import { Link } from 'react-router-dom'
 
 
-class Dashboard extends Component {
+class DashboardClient extends Component {
 
     constructor(props) {
         super(props)
@@ -141,4 +140,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard
+export default DashboardClient

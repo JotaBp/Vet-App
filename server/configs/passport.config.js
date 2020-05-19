@@ -5,6 +5,9 @@ const LocalStrategy = require("passport-local").Strategy
 const flash = require("connect-flash")
 
 const User = require('../models/user.model')
+const CiteHospital = require('../models/citeHospital.model')
+const QueryClient = require('../models/queryClient.model')
+const Pet = require('../models/pet.model')
 
 module.exports = app => {
 
@@ -17,6 +20,23 @@ module.exports = app => {
     passport.serializeUser((user, next) => next(null, user._id))
     passport.deserializeUser((id, next) => {
         User.findById(id)
+            .populate([{
+                    path: "queryClient",
+                    model: "QueryClient"
+                },
+                {
+                    path: "citeHospital",
+                    model: "CiteHospital"
+                },
+                {
+                    path: "pets",
+                    model: "Pet",
+                    populate: {
+                        path: "vetHospital",
+                        model: "User"
+                    }
+                }
+            ])
             .then(theUser => next(null, theUser))
             .catch(err => next(err))
     })
@@ -25,14 +45,39 @@ module.exports = app => {
 
     app.use(flash())
 
-    passport.use(new LocalStrategy({ passReqToCallback: true }, (req, username, password, next) => {
-        User.findOne({ username })
+    passport.use(new LocalStrategy({
+        passReqToCallback: true
+    }, (req, username, password, next) => {
+        User.findOne({
+                username
+            })
+            .populate([{
+                    path: "queryClient",
+                    model: "QueryClient"
+                },
+                {
+                    path: "citeHospital",
+                    model: "CiteHospital"
+                },
+                {
+                    path: "pets",
+                    model: "Pet",
+                    populate: {
+                        path: "vetHospital",
+                        model: "User"
+                    }
+                }
+            ])
             .then(user => {
                 if (!user) {
-                    return next(null, false, { message: "Nombre de usuario incorrecto" })
+                    return next(null, false, {
+                        message: "Nombre de usuario incorrecto"
+                    })
                 }
                 if (!bcrypt.compareSync(password, user.password)) {
-                    return next(null, false, { message: "Contraseña incorrecta" })
+                    return next(null, false, {
+                        message: "Contraseña incorrecta"
+                    })
                 }
                 return next(null, user)
             })

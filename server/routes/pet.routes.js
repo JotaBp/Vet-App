@@ -2,6 +2,9 @@ const express = require("express")
 const router = express.Router()
 
 const Pet = require("../models/pet.model")
+const CiteHospital = require("../models/citeHospital.model")
+const User = require("../models/user.model")
+const QueryClient = require("../models/queryClient.model")
 
 const ensureLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.redirect('/login')
 
@@ -30,6 +33,7 @@ router.get('/petDetails/:id', ensureLoggedIn, (req, res, next) => {
 router.post('/createPet', ensureLoggedIn, (req, res, next) => {
     
     Pet.create(req.body)
+        .then(createdPet => User.findByIdAndUpdate(createdPet.owner, {$push: {pets: createdPet._id}}, {new:true}))
         .then(data => res.json(data))
         .catch(err => next(new Error(err)))
 })

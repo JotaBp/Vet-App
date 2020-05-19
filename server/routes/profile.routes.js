@@ -4,32 +4,32 @@ const router = express.Router()
 const ensureLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.redirect('/login')
 
 const User = require("../models/user.model");
-const Query = require("../models/queryClient.model");
+const QueryClient = require("../models/queryClient.model");
 const Pet = require("../models/pet.model");
-const Cite = require("../models/citeHospital.model");
+const CiteHospital = require("../models/citeHospital.model");
 
 
 router.get('/:id', (req, res, next) => {
 
     User.findById(req.params.id)
-        // .populate([
-        //     {
-        //         path: "queryClient",
-        //         model: "Query"
-        //     },
-        //     {
-        //         path: "citeHospital",
-        //         model: "Cite"
-        //     },
-        //     {
-        //         path: "pets",
-        //         model: "Pet",
-        //         populate: {
-        //             path: "vetHospital",
-        //             model: "User"
-        //         }
-        //     }
-        // ])
+        .populate([
+            {
+                path: "queryClient",
+                model: "QueryClient"
+            },
+            {
+                path: "citeHospital",
+                model: "CiteHospital"
+            },
+            {
+                path: "pets",
+                model: "Pet",
+                populate: {
+                    path: "vetHospital",
+                    model: "User"
+                }
+            }
+        ])
         .then(data => res.status(200).json(data))
         .catch(err => next(new Error(err)))
 })

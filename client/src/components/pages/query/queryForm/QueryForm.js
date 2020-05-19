@@ -52,7 +52,7 @@ class QueryForm extends Component {
                         <Form.Control name="description" type="text" value={this.state.description} onChange={this.handleInputChange} />
                     </Form.Group>
                     <Form.Group controlId="date">
-                        <Form.Label>Inversiones</Form.Label>
+                        <Form.Label>Fecha</Form.Label>
                         <Form.Control name="date" type="date" value={this.state.date} onChange={this.handleInputChange} />
                     </Form.Group>
                     {/* <Form.Group controlId="img">

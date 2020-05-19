@@ -21,7 +21,7 @@ import Modal from 'react-bootstrap/Modal'
 import { Link } from 'react-router-dom'
 
 
-class Dashboard extends Component {
+class DashboardHospital extends Component {
 
     constructor(props) {
         super(props)
@@ -74,6 +74,12 @@ class Dashboard extends Component {
     }
 
 
+    // 1. Formulario creación de query en el Dashboard Cliente
+    // 2. Ruta del back que crea la query y en el then la vincula al user y al hospital (Revisar lo hecho en el cite.routes)
+    // 3. Preparar formulario respuesta del hospital
+    // 4. Ruta del back respuesta del hospital que hace un findByIdAndUpdate y actualiza el campo de answer
+    // 5. En este punto, el usuario y el hospital deben ver la respuesta (preparar el campo en front con render condicional tipo if query.answer && <p>{answer}</p>)
+
     
 
     render() {
@@ -125,13 +131,12 @@ class Dashboard extends Component {
 
                 <Modal show={this.state.modalShow} onHide={() => this.handleModal(false)}>
                     <Modal.Body>
-                        <CiteForm finishCitePost={this.finishCiteCreate} closeModal={() => this.handleModal(false)} />
+                        <CiteForm finishCitePost={this.finishCiteCreate} hospitalID={this.props.loggedInUser._id} pets={this.props.loggedInUser.pets} closeModal={() => this.handleModal(false)} />
                     </Modal.Body>
                 </Modal>
 
                 <Toast onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
                     <Toast.Header>
-                        <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
                         <strong className="mr-auto">Mensaje</strong>
                     </Toast.Header>
                     <Toast.Body>{this.state.toast.text}</Toast.Body>
@@ -142,4 +147,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard
+export default DashboardHospital
