@@ -24,7 +24,7 @@ router.get('/queryFromHospital/:idHospital', ensureLoggedIn, (req, res, next) =>
                 }
             }
         ])
-        .then(data => res.json(data))
+        .then(data => res.status(200).json(data))
         .catch(err => next(new Error(err)))
 })
 
@@ -46,22 +46,28 @@ router.get('/queryFromPet/:idPet', ensureLoggedIn, (req, res, next) => {
                 }
             }
         ])
-        .then(data => res.json(data))
+        .then(data => res.status(200).json(data))
         .catch(err => next(new Error(err)))
 })
 
 router.get('/queryDetails/:id', ensureLoggedIn, (req, res, next) => {
     Query.findById(req.params.id)
-        .then(data => res.json(data))
+        .then(data => res.status(200).json(data))
         .catch(err => next(new Error(err)))
 })
 
-//nueva mascota
+//nueva query
 
 router.post('/createQuery', ensureLoggedIn, (req, res, next) => {
 
     Query.create(req.body)
-        .then(data => res.json(data))
+        .then(createdQuery => {
+            let updatePet = Pet.findByIdAndUpdate(createdQuery.pet, {$push: {queryClient: createdQuery._id}}, {new:true})
+            let updateHospital = User.findByIdAndUpdate(createdQuery.vetHospital, {$push: {queryClient: createdQuery._id}}, {new:true})
+            return Promise.all([updatePet, updateHospital])
+
+        })
+        .then(data => res.status(200).json(data))
         .catch(err => next(new Error(err)))
 })
 
@@ -69,7 +75,7 @@ router.post('/createQuery', ensureLoggedIn, (req, res, next) => {
 router.get('/query/:id/edit', ensureLoggedIn, (req, res, next) => {
 
     Query.findById(req.params.id)
-        .then(data => res.json(`/api/query/${data._id}/edit`, {
+        .then(data => res.status(200).json(`/api/query/${data._id}/edit`, {
             data
         }))
         .catch(err => next(new Error(err)))
@@ -81,7 +87,7 @@ router.post('/query/:id/edit', ensureLoggedIn, (req, res, next) => {
             new: true
         })
         .then(updatedQuery => {
-            res.json(`/api/queryDetails/${updatedQuery._id}`)
+            res.status(200).json(`/api/queryDetails/${updatedQuery._id}`)
         })
         .catch(err => next(new Error(err)))
 })
@@ -89,7 +95,7 @@ router.post('/query/:id/edit', ensureLoggedIn, (req, res, next) => {
 //eliminar query
 router.post('/query/:id/delete', ensureLoggedIn, (req, res, next) => {
     Query.findByIdAndRemove(req.params.id)
-        .then(data => res.json(data))
+        .then(data => res.status(200).json(data))
         .catch(err => next(new Error(err)))
 })
 

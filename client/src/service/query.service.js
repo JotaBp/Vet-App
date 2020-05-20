@@ -9,8 +9,7 @@ export default class services {
     }
 
     queryFromHospital = idHospital => this.service.get(`/queryFromHospital/${idHospital}`)
-    // citesFromPet = idPet => this.service.get(`/citesFromPet/${idPet}`)
-    // citeDetails = citeId => this.service.get(`/citeDetails/${citeId}`)
+    queryFromPet = idPet => this.service.get(`/queryFromPet/${idPet}`)
     queryCreate = theQuery => this.service.post(`/createQuery`, theQuery)
     // citeEdit
     // citeDelte

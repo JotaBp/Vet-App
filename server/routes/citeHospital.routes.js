@@ -9,7 +9,7 @@ const ensureLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.
 
 
 //Muestra las cites del hospital
-router.get('/citeFromHospital/:idHospital', ensureLoggedIn, (req, res, next) => {
+router.get('/citesFromHospital/:idHospital', ensureLoggedIn, (req, res, next) => {
     CiteHospital.find({
             vetHospital: req.params.idHospital
         })

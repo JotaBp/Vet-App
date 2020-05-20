@@ -8,7 +8,7 @@ export default class services {
         })
     }
 
-    getPets = () => this.service.get('/allPets')
+    getPetsFromUser = () => this.service.get('/allPets')
     petCreate = thePet => this.service.post(`/createPet`, thePet) 
 
 

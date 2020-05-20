@@ -8,8 +8,8 @@ export default class services {
         })
     }
 
-    citeFromHospital = idHospital => this.service.get(`/citeFromHospital/${idHospital}`)
-    // citesFromPet = idPet => this.service.get(`/citesFromPet/${idPet}`)
+    citeFromHospital = idHospital => this.service.get(`/citesFromHospital/${idHospital}`)
+    citesFromPet = idPet => this.service.get(`/citesFromPet/${idPet}`)
     // citeDetails = citeId => this.service.get(`/citeDetails/${citeId}`)
     createCite = theCite => this.service.post(`/createCite`, theCite)
     // citeEdit

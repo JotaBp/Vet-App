@@ -29,7 +29,6 @@ class Navigation extends Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>
                         <Nav.Link as="div"><Link to="/">Inicio</Link></Nav.Link>
-                        <Nav.Link as="div"><Link to="/pets">Mascotas</Link></Nav.Link>
 
                         {
                             !this.props.loggedInUser ?

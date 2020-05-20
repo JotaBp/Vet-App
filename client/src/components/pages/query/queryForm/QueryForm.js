@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import QueryService from '../../../../service/query.service'
 
 import Container from 'react-bootstrap/Container'
@@ -14,12 +15,16 @@ class QueryForm extends Component {
             subject: '',
             description: '',
             date: '',
-            //Además hay que unirlo a un pet, de los qu tiene el propietario que la ha creado
-            //tambien a la cita si la query es respondida por el hospital al que se envia
+            pet: '',
+            vetHospital: ''
+
         }
         this.queryService = new QueryService()
     }
 
+    displayHospitals = () => {
+        return this.props.hospitalArr.map(hospital => <option value={hospital._id}>{hospital.name}</option>)
+    }
 
     handleInputChange = e => {
         const { name, value } = e.target
@@ -29,10 +34,13 @@ class QueryForm extends Component {
         })
     }
 
+
     handleSubmit = e => {
         e.preventDefault()
-        this.queryService.queryCreate(this.state)
-            .then(() => this.props.finishQueryPost())
+        let newQuery = { ...this.state }
+        newQuery.pet = this.props.petId
+        this.queryService.queryCreate(newQuery)
+            .then(() => this.props.finishQueryCreate())
             .catch(err => console.log(err))
     }
 
@@ -55,6 +63,14 @@ class QueryForm extends Component {
                         <Form.Label>Fecha</Form.Label>
                         <Form.Control name="date" type="date" value={this.state.date} onChange={this.handleInputChange} />
                     </Form.Group>
+
+                    <Form.Group controlId="select-hospital">
+                        <Form.Label>Selecciona hospital</Form.Label>
+                        <Form.Control as="select" name="vetHospital" onChange={this.handleInputChange} custom>
+                            {this.displayHospitals()}
+                        </Form.Control>
+                    </Form.Group>
+
                     {/* <Form.Group controlId="img">
                         <Form.Label>Imagen (URL)</Form.Label>
                         <Form.Control name="imageUrl" type="text" value={this.state.imageUrl} onChange={this.handleInputChange} />

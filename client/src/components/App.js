@@ -6,7 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
 import Navigation from './ui/navbar/Navbar'
-import PetsList from './pages/pets/petsList/PetsList'
 import HomePage from './pages/homePage/HomePage'
 import Signup from './pages/signup/Signup'
 import Login from './pages/login/Login'
@@ -51,7 +50,6 @@ class App extends Component {
 
           <Switch>
             <Route path="/" exact render={() => <HomePage />} />
-            <Route path="/pets" render={() => this.state.loggedInUser ? <PetsList loggedInUser={this.state.loggedInUser} /> : <Redirect to="/" />} />
             <Route path="/signup" render={props => <Signup {...props} setTheUser={this.setTheUser} />} />
             <Route path="/login" render={props => <Login {...props} setTheUser={this.setTheUser} />} />
 
