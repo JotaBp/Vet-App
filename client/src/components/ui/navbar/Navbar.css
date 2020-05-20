@@ -1,0 +1,28 @@
+.navbar{
+    position: fixed;
+    padding: 50px;
+    width: 100%;
+    height: 60px;
+    text-decoration: none;
+    z-index: 1000;
+    display: flex;
+    
+}
+
+a{
+    color: beige;
+}
+
+a:hover{
+    color: beige;
+
+}
+
+div{
+    background-color: inherit;
+}
+
+.logo img{
+    width: 80px;
+    border-radius: 50%;
+}

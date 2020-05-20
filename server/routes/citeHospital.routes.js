@@ -4,6 +4,8 @@ const router = express.Router()
 const CiteHospital = require("../models/citeHospital.model")
 const User = require("../models/user.model")
 const Pet = require("../models/pet.model")
+const QueryClient = require("../models/queryClient.model")
+
 
 const ensureLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.redirect('/login')
 
@@ -65,6 +67,21 @@ router.post('/createCite', ensureLoggedIn, (req, res, next) => {
           let updateUser = User.findByIdAndUpdate(createdCite.vetHospital, {$push: {citeHospital: createdCite._id}}, {new:true})
           let updatePet = Pet.findByIdAndUpdate(createdCite.pet, {$push: {citeHospital: createdCite._id}}, {new:true})
              return Promise.all([updateUser, updatePet])
+         })
+        .then(data => res.status(200).json(data))
+        .catch(err => next(new Error(err)))
+})
+
+
+
+router.post('/createCiteResponse', ensureLoggedIn, (req, res, next) => {
+
+    CiteHospital.create(req.body)
+        .then((createdCiteResponse)=>{
+          let updateUser = User.findByIdAndUpdate(createdCiteResponse.vetHospital, {$push: {citeHospital: createdCiteResponse._id}}, {new:true})
+          let updatePet = Pet.findByIdAndUpdate(createdCiteResponse.pet, {$push: {citeHospital: createdCiteResponse._id}}, {new:true})
+          let updateQuery = QueryClient.findByIdAndUpdate(createdCiteResponse.queryClient, {$push: {answer: createdCiteResponse._id}}, {new: true})
+            return Promise.all([updateUser, updatePet, updateQuery])
          })
         .then(data => res.status(200).json(data))
         .catch(err => next(new Error(err)))

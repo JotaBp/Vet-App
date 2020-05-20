@@ -1,24 +1,36 @@
 import React, { Component } from 'react'
+
+import VetHospital from '../../../../service/profile.service'
 import PetService from '../../../../service/pet.service'
+import FileService from '../../../../service/file.service'
+
 
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 
-class CiteForm extends Component {
+class PetForm extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             name: '',
             species: '',
-            // petPicPath: '',
+            petPicPath: '',
             breed: '',
-            owner: ''
+            owner: '',
+            vetHospital: ''
         }
         this.petService = new PetService()
+        this.filesService = new FileService()
+
     }
+
+
+    // displayHospitals = () => {
+    //     return 
+    // }
 
 
     handleInputChange = e => {
@@ -38,7 +50,23 @@ class CiteForm extends Component {
             .catch(err => console.log(err))
     }
 
+    handleFileUpload = e => {
+
+        const uploadData = new FormData()
+        uploadData.append("petPicPath", e.target.files[0])
+        this.filesService.handleUpload(uploadData)
+            .then(response => {
+                console.log('Subida de archivo finalizada! La URL de Cloudinray es: ', response.data.secure_url)
+                this.setState({
+                    ...this.state, petPicPath: response.data.secure_url
+                })
+            })
+            .catch(err => console.log(err))
+    }
+
     render() {
+
+
         return (
             <Container>
 
@@ -58,11 +86,20 @@ class CiteForm extends Component {
                         <Form.Control name="breed" type="text" value={this.state.breed} onChange={this.handleInputChange} />
                     </Form.Group>
 
-                    {/* <Form.Group controlId="img">
-                        <Form.Label>Imagen (URL)</Form.Label>
-                        <Form.Control name="imageUrl" type="text" value={this.state.imageUrl} onChange={this.handleInputChange} />
+                    <Form.Group controlId="img">
+                        <Form.Label>Foto de tu mascota</Form.Label>
+                        <Form.Control name="petPicPath" type="file" value={this.state.petPicPath} onChange={this.handleFileUpload} />
+                    </Form.Group>
+
+                    {/* <Form.Group controlId="select-hospital">
+                        <Form.Label>Selecciona hospital</Form.Label>
+                        <Form.Control as="select" name="vetHospital" value={this.state.vetHospital} onChange={this.handleInputChange} >
+                            <option>Seleccionar</option>
+                            {this.displayHospitals()}
+                        </Form.Control>
                     </Form.Group> */}
-                    <Button variant="dark" onClick={() => this.props.closeModal()} style={{ marginRight: '10px' }}>Cerrar</Button>
+
+                    <Button variant="dark" onClick={() => this.props.closeModal()}>Cerrar</Button>
                     <Button variant="dark" type="submit">Nueva mascota</Button>
                 </Form>
             </Container>
@@ -70,4 +107,4 @@ class CiteForm extends Component {
     }
 }
 
-export default CiteForm
+export default PetForm

@@ -10,7 +10,7 @@ export default class services {
 
     citeFromHospital = idHospital => this.service.get(`/citesFromHospital/${idHospital}`)
     citesFromPet = idPet => this.service.get(`/citesFromPet/${idPet}`)
-    // citeDetails = citeId => this.service.get(`/citeDetails/${citeId}`)
+    createCiteResponse = theCiteResponse => this.service.post(`/createCiteResponse`, theCiteResponse)
     createCite = theCite => this.service.post(`/createCite`, theCite)
     // citeEdit
     // citeDelte

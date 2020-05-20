@@ -22,7 +22,11 @@ module.exports = app => {
         User.findById(id)
             .populate([{
                     path: "queryClient",
-                    model: "QueryClient"
+                    model: "QueryClient",
+                    populate: {
+                        path: "answer",
+                        model:"Citehospital"
+                    }
                 },
                 {
                     path: "citeHospital",
@@ -53,7 +57,11 @@ module.exports = app => {
             })
             .populate([{
                     path: "queryClient",
-                    model: "QueryClient"
+                    model: "QueryClient",
+                    populate: {
+                        path: "answer",
+                        model:"Citehospital"
+                    }
                 },
                 {
                     path: "citeHospital",

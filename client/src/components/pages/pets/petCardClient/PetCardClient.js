@@ -78,6 +78,7 @@ class PetCardClient extends Component {
 
     render() {
         console.log(this.props)
+        console.log(this.state.querys)
 
         return (
             <>
@@ -99,6 +100,8 @@ class PetCardClient extends Component {
                                 <h4>Consultas</h4>
 
                                 {this.state.querys && this.state.querys.map(query => {
+
+                                    console.log(query)
 
                                     return (<Card.Body key={query._id}>
                                         <Card.Title>{query.subject}</Card.Title>
@@ -122,7 +125,7 @@ class PetCardClient extends Component {
 
 
                                 <Card.Footer>
-                                    <Button onClick={() => this.handleModal(true)} variant="dark" style={{ marginBottom: '20px' }}>Crear Consulta para {this.props.name}</Button>
+                                    <Button onClick={() => this.handleModal(true)} variant="dark" >Crear Consulta para {this.props.name}</Button>
 
                                 </Card.Footer>
                             </Card>

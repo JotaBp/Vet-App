@@ -2,6 +2,9 @@ const express = require("express")
 const router = express.Router()
 
 const Query = require("../models/queryClient.model")
+const Pet = require("../models/pet.model")
+const User = require("../models/user.model")
+
 
 const ensureLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.redirect('/login')
 

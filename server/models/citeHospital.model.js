@@ -10,6 +10,7 @@ const citeHospitalSchema = new Schema({
   subject: String,
   description: String,
   date: Date,
+  query: [String],
   vetHospital: {
     type: Schema.Types.ObjectId,
     ref: "VetHospital"

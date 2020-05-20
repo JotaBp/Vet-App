@@ -110,7 +110,7 @@ function createQuery() {
     subject: faker.lorem.sentence(),
     description: faker.lorem.text(),
     date: faker.date.future(),
-    status: "pending-client",
+    status: "closed",
     vetHospital: allVetHospitals[randomNum(allVetHospitals.length)]._id
   }
 }

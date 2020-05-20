@@ -65,9 +65,14 @@ class CiteForm extends Component {
                         <Form.Label>Dia de la cita</Form.Label>
                         <Form.Control name="date" type="date" value={this.state.date} onChange={this.handleInputChange} />
                     </Form.Group>
-                    <select name="pet" onChange={this.handleInputChange}>
-                        {this.displayPets()}
-                    </select>
+
+                    <Form.Group controlId="select-hospital">
+                        <Form.Label>Selecciona hospital</Form.Label>
+                        <Form.Control as="select" name="pet" value={this.state.pet} onChange={this.handleInputChange} >
+                            <option>Seleccionar</option>
+                            {this.displayPets()}
+                        </Form.Control>
+                    </Form.Group>
                     {/* <Form.Group controlId="img">
                         <Form.Label>Imagen (URL)</Form.Label>
                         <Form.Control name="imageUrl" type="text" value={this.state.imageUrl} onChange={this.handleInputChange} />

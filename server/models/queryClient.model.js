@@ -15,9 +15,9 @@ const queryClientSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ["pending-client", "closed", "scheduled", "pending-answer"]
+        enum: ["pending-client", "closed", "scheduled", "pending-answer"],
+        default: "pending-answer"
     },
-    query: [String],
     answer: [String]
 
 }, {

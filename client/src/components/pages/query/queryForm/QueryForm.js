@@ -23,9 +23,10 @@ class QueryForm extends Component {
     }
 
     displayHospitals = () => {
-        return this.props.hospitalArr.map(hospital => { 
-            console.log(hospital)
-        return(<option value={hospital._id}>{hospital.username}</option>)})
+        return this.props.hospitalArr.map(hospital => {
+            console.log(hospital._id)
+            return (<option value={hospital._id}>{hospital.username}</option>)
+        })
     }
 
     handleInputChange = e => {
@@ -47,10 +48,11 @@ class QueryForm extends Component {
     }
 
     render() {
+        console.log(this.state.vetHospital)
         return (
             <Container>
 
-                <h1>Nueva Cita</h1>
+                <h1>Nueva Consulta</h1>
                 <hr></hr>
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="asunto">
@@ -68,7 +70,8 @@ class QueryForm extends Component {
 
                     <Form.Group controlId="select-hospital">
                         <Form.Label>Selecciona hospital</Form.Label>
-                        <Form.Control as="select" name="vetHospital" onChange={this.handleInputChange} custom>
+                        <Form.Control as="select" name="vetHospital" value={this.state.vetHospital} onChange={this.handleInputChange} >
+                            <option>Seleccionar</option>
                             {this.displayHospitals()}
                         </Form.Control>
                     </Form.Group>
