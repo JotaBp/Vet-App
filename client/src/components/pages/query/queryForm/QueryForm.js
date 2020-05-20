@@ -23,7 +23,9 @@ class QueryForm extends Component {
     }
 
     displayHospitals = () => {
-        return this.props.hospitalArr.map(hospital => <option value={hospital._id}>{hospital.name}</option>)
+        return this.props.hospitalArr.map(hospital => { 
+            console.log(hospital)
+        return(<option value={hospital._id}>{hospital.username}</option>)})
     }
 
     handleInputChange = e => {
