@@ -23,6 +23,7 @@ class HospitalProfile extends Component {
         super(props)
         this.state = {
             profileInfo: {
+                id: this.props.loggedInUser._id,
                 username: '',
                 surname: '',
                 email: '',
@@ -58,7 +59,7 @@ class HospitalProfile extends Component {
 
 
     getDetailsProfile = () => {
-        this.profileService.getProfile(this.props.loggedInUser._id)
+        this.profileService.getProfile(this.state.profileInfo.id)
             .then(response => this.setState({ profileInfo: response.data }))
             .catch(err => console.log(err))
     }
@@ -68,32 +69,7 @@ class HospitalProfile extends Component {
         this.getDetailsProfile()
     }
 
-    // finishPetCreate = () => {
-    //     this.getDetailsProfile()
-    //     this.handleModal(false)
-    //     this.handletoast(true, 'Cita creada en BBDD')
-    // }
 
-    // handleInputChange = e => {
-
-    //     let upDateProfileInfoCopy = { ...this.state.upDateProfileInfo }
-    //     const { name, value } = e.target
-    //     upDateProfileInfoCopy = { ...upDateProfileInfoCopy, [name]: value }
-
-    //     this.setState({ upDateProfileInfo: upDateProfileInfoCopy })
-    // }
-
-    // handleSubmit = e => {
-    //     e.preventDefault()
-    //     this.profileService.updateProfile(this.state.signUpInfo)
-    //         .then(response => {
-    //             this.props.setTheUser(response.data)
-    //             this.props.history.push('/')
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-    // }
 
     render() {
 

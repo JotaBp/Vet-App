@@ -19,7 +19,7 @@ class PetForm extends Component {
             species: '',
             petPicPath: '',
             breed: '',
-            owner: '',
+            owner: this.props.ownerID,
             vetHospital: ''
         }
         this.petService = new PetService()
@@ -43,9 +43,7 @@ class PetForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        let newPet = {...this.state}
-        newPet.owner = this.props.ownerID
-        this.petService.petCreate(newPet)
+        this.petService.petCreate(this.state)
             .then(() => this.props.finishPetPost())
             .catch(err => console.log(err))
     }
@@ -86,10 +84,10 @@ class PetForm extends Component {
                         <Form.Control name="breed" type="text" value={this.state.breed} onChange={this.handleInputChange} />
                     </Form.Group>
 
-                    <Form.Group controlId="img">
+                    {/* <Form.Group controlId="img">
                         <Form.Label>Foto de tu mascota</Form.Label>
                         <Form.Control name="petPicPath" type="file" value={this.state.petPicPath} onChange={this.handleFileUpload} />
-                    </Form.Group>
+                    </Form.Group> */}
 
                     {/* <Form.Group controlId="select-hospital">
                         <Form.Label>Selecciona hospital</Form.Label>

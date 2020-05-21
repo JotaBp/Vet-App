@@ -27,11 +27,20 @@ class PetCardClient extends Component {
     constructor(props) {
         super(props)
         this.state = {
+
             petInfo: {
-                cites: "",
-                querys: "",
-                vetHospital: ""
+                id: this.props._id,
+                petPicPath: this.props.petPicPath,
+                name: this.props.name,
+                species: this.props.species,
+                breed: this.props.breed,
+                vetHospital: this.props.vetHospital
+
             },
+
+            cites: "",
+            querys: "",
+            
             toast: {
                 show: false,
                 text: ''
@@ -77,8 +86,8 @@ class PetCardClient extends Component {
 
 
     render() {
-        console.log(this.props)
-        console.log(this.state.querys)
+        // console.log(this.props)
+        // console.log(this.state.querys)
 
         return (
             <>
@@ -89,12 +98,12 @@ class PetCardClient extends Component {
                     <Row>
                         <Col as="article">
                             <Card>
-                                <Card.Img variant="top" src={this.props.petPicPath} />
+                                <Card.Img variant="top" src={this.state.petInfo.petPicPath} />
 
-                                <Card.Header as="h5">{this.props.name}</Card.Header>
+                                <Card.Header as="h5">{this.state.petInfo.name}</Card.Header>
                                 <ListGroup className="list-group-flush">
-                                    <ListGroup.Item>{this.props.species}</ListGroup.Item>
-                                    <ListGroup.Item>{this.props.breed}</ListGroup.Item>
+                                    <ListGroup.Item>{this.state.petInfo.species}</ListGroup.Item>
+                                    <ListGroup.Item>{this.state.petInfo.breed}</ListGroup.Item>
                                 </ListGroup>
 
                                 <h4>Consultas</h4>
@@ -109,7 +118,7 @@ class PetCardClient extends Component {
                                         <Card.Subtitle >{query.description}</Card.Subtitle>
                                     </Card.Body>)
                                 })}
-                                
+
                                 <h4>Citas</h4>
 
                                 {this.state.cites && this.state.cites.map(cite => {
@@ -125,7 +134,7 @@ class PetCardClient extends Component {
 
 
                                 <Card.Footer>
-                                    <Button onClick={() => this.handleModal(true)} variant="dark" >Crear Consulta para {this.props.name}</Button>
+                                    <Button onClick={() => this.handleModal(true)} variant="dark" >Crear Consulta para {this.state.petInfo.name}</Button>
 
                                 </Card.Footer>
                             </Card>
@@ -138,7 +147,7 @@ class PetCardClient extends Component {
 
                 <Modal show={this.state.modalShow} onHide={() => this.handleModal(false)}>
                     <Modal.Body>
-                        <QueryForm finishQueryCreate={this.finishQueryPost} petId={this.props._id} hospitalArr={this.props.vetHospital} closeModal={() => this.handleModal(false)} />
+                        <QueryForm finishQueryCreate={this.finishQueryPost} petId={this.state.petInfo._id} hospitalArr={this.state.petInfo.vetHospital} closeModal={() => this.handleModal(false)} />
                     </Modal.Body>
                 </Modal>
 

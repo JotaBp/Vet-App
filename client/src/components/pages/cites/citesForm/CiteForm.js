@@ -14,11 +14,9 @@ class CiteForm extends Component {
             subject: '',
             description: '',
             date: '',
-            vetHospital: '',
+            vetHospital: this.props.hospitalID,
             pet: '',
-            //Además hay que unirlo a un pet, de los qu tiene el hospital
-            // entre sus clientes
-            //tambien a la query si la cite es una respuesta a una consulta
+
         }
         this.citeService = new CiteService()
     }
@@ -38,9 +36,7 @@ class CiteForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        let newCite = {...this.state}
-        newCite.vetHospital = this.props.hospitalID
-        this.citeService.createCite(newCite)
+        this.citeService.createCite(this.state)
             .then(() => this.props.finishCitePost())
             .catch(err => console.log(err))
     }
@@ -73,10 +69,7 @@ class CiteForm extends Component {
                             {this.displayPets()}
                         </Form.Control>
                     </Form.Group>
-                    {/* <Form.Group controlId="img">
-                        <Form.Label>Imagen (URL)</Form.Label>
-                        <Form.Control name="imageUrl" type="text" value={this.state.imageUrl} onChange={this.handleInputChange} />
-                    </Form.Group> */}
+
                     <Button variant="dark" onClick={() => this.props.closeModal()} style={{ marginRight: '10px' }}>Cerrar</Button>
                     <Button variant="dark" type="submit">Nueva cita</Button>
                 </Form>

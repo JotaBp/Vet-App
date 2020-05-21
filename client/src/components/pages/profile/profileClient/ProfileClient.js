@@ -23,6 +23,7 @@ class ProfileClient extends Component {
         super(props)
         this.state = {
             profileInfo: {
+                id: this.props.loggedInUser._id,
                 username: '',
                 surname: '',
                 email: '',
@@ -54,7 +55,7 @@ class ProfileClient extends Component {
     }
 
     getDetailsProfile = () => {
-        this.profileService.getProfile(this.props.loggedInUser._id)
+        this.profileService.getProfile(this.state.profileInfo.id)
             .then(response => this.setState({ profileInfo: response.data }))
             .catch(err => console.log(err))
     }
@@ -121,7 +122,7 @@ class ProfileClient extends Component {
 
                 <Modal show={this.state.modalShow} onHide={() => this.handleModal(false)}>
                     <Modal.Body>
-                        <PetForm finishPetPost={this.finishPetCreate} ownerID={this.props.loggedInUser._id} closeModal={() => this.handleModal(false)} />
+                        <PetForm finishPetPost={this.finishPetCreate} ownerID={this.state.profileInfo.id} closeModal={() => this.handleModal(false)} />
                     </Modal.Body>
                 </Modal>
 

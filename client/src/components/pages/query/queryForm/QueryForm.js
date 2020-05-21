@@ -16,7 +16,8 @@ class QueryForm extends Component {
             description: '',
             date: '',
             pet: '',
-            vetHospital: ''
+            vetHospital: '',
+            petId: this.props.petId
 
         }
         this.queryService = new QueryService()
@@ -40,9 +41,7 @@ class QueryForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        let newQuery = { ...this.state }
-        newQuery.pet = this.props.petId
-        this.queryService.queryCreate(newQuery)
+        this.queryService.queryCreate(this.state)
             .then(() => this.props.finishQueryCreate())
             .catch(err => console.log(err))
     }

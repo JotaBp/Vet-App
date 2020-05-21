@@ -11,11 +11,11 @@ class CiteResponseForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            subject: '',
+            subject: this.props.queryObj.subject,
             description: '',
-            queryClient: '',
-            vetHospital: '',
-            pet: ''
+            queryClient: this.props.queryObj._id,
+            vetHospital: this.props.hospitalObj._id,
+            pet: this.props.petObj._id
         }
         this.citeService = new CiteService()
     }
@@ -32,12 +32,7 @@ class CiteResponseForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        let newResponseCite = { ...this.state }
-        newResponseCite.vetHospital = this.props.hospitalObj._id
-        newResponseCite.pet = this.props.petObj._id
-        newResponseCite.queryClient = this.props.queryObj._id
-        newResponseCite.subject = this.props.queryObj.subject
-        this.citeService.createCiteResponse(newResponseCite)
+        this.citeService.createCiteResponse(this.state)
             .then(() => this.props.finishCiteResponsePost())
             .catch(err => console.log(err))
     }

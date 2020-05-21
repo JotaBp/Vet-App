@@ -27,9 +27,11 @@ class DashboardHospital extends Component {
         super(props)
         this.state = { 
             userInfo: {
-                querys: "",
-                cites: ""
+                id: this.props.loggedInUser._id
             },
+                querys: "",
+                cites: "",
+            
             toast: {
                 show: false,
                 text: ''
@@ -50,13 +52,13 @@ class DashboardHospital extends Component {
     }
     
     getCitesInfo = () => {
-        this.citeService.citeFromHospital(this.props.loggedInUser._id)
+        this.citeService.citeFromHospital(this.state.userInfo.id)
         .then(response => this.setState({ cites: response.data }))
         .catch(err => console.log(err))
     }
 
     getQueryInfo = () => {
-        this.queryService.queryFromHospital(this.props.loggedInUser._id)
+        this.queryService.queryFromHospital(this.state.userInfo.id)
         .then(response => this.setState({ querys: response.data }))
         .catch(err => console.log(err))
     }
@@ -84,9 +86,9 @@ class DashboardHospital extends Component {
 
     render() {
 
-        console.log(this.props.loggedInUser._id)
-        console.log(this.state.cites)
-        console.log(this.state.querys)
+        // console.log(this.props.loggedInUser._id)
+        // console.log(this.state.cites)
+        // console.log(this.state.querys)
 
         return (
             <>
