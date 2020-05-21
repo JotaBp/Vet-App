@@ -9,38 +9,21 @@ const Pet = require("../models/pet.model");
 const CiteHospital = require("../models/citeHospital.model");
 
 
-router.get('/:id', (req, res, next) => {
 
-    User.findById(req.params.id)
-        .populate([
-            {
-                path: "queryClient",
-                model: "QueryClient"
-            },
-            {
-                path: "citeHospital",
-                model: "CiteHospital"
-            },
-            {
-                path: "pets",
-                model: "Pet",
-                populate: {
-                    path: "vetHospital",
-                    model: "User"
-                }
-            }
-        ])
-        .then(data => res.status(200).json(data))
-        .catch(err => next(new Error(err)))
+router.get('/onlyVetHospital', (req, res, next) => {
+    
+    User.find({ role: "VETHOSPITAL" })
+    .then(data => res.status(200).json(data))
+    .catch(err => next(new Error(err)))
 })
 
 router.get('/:id/edit', (req, res, next) => {
-
+    
     User.findById(req.params.id)
-        .then(data => res.status(200).json(`/api/profile/${data._id}/edit`, {
-            data
-        }))
-        .catch(err => next(new Error(err)))
+    .then(data => res.status(200).json(`/api/profile/${data._id}/edit`, {
+        data
+    }))
+    .catch(err => next(new Error(err)))
 })
 
 router.put('/:id/edit', (req, res, next) => {
@@ -49,20 +32,47 @@ router.put('/:id/edit', (req, res, next) => {
         })
         .then(data => res.status(200).json(data))
         .catch(err => next(new Error(err)))
+        
+    })
 
-})
-
-router.post('/:id/delete', (req, res, next) => {
-    User.findByIdAndRemove(req.params.id)
+    router.post('/:id/delete', (req, res, next) => {
+        User.findByIdAndRemove(req.params.id)
         .then((response) => res.status(200).json(response))
         .catch(err => next(new Error(err)))
-
-})
-
-module.exports = router
-
-// router.put('/:id', (req, res, next) => {
-//     const { id } = req.params;
+        
+    })
+    
+    router.get('/:id', (req, res, next) => {
+    
+        User.findById(req.params.id)
+            .populate([
+                {
+                    path: "queryClient",
+                    model: "QueryClient"
+                },
+                {
+                    path: "citeHospital",
+                    model: "CiteHospital"
+                },
+                {
+                    path: "pets",
+                    model: "Pet",
+                    populate: {
+                        path: "vetHospital",
+                        model: "User"
+                    }
+                }
+            ])
+            .then(data => res.status(200).json(data))
+            .catch(err => {
+                console.log(err)
+                return next(new Error(err))})
+    })
+    
+    module.exports = router
+    
+    // router.put('/:id', (req, res, next) => {
+        //     const { id } = req.params;
 //     Todo.findByIdAndUpdate(id, req.body)
 //     .then(() => {
 //       res.status(200).json({ message: `Todo ${id} updated` })

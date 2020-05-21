@@ -2,7 +2,6 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const citeHospitalSchema = new Schema({
-
   pet: {
     type: Schema.Types.ObjectId,
     ref: "Pet"
@@ -10,7 +9,6 @@ const citeHospitalSchema = new Schema({
   subject: String,
   description: String,
   date: Date,
-  query: [String],
   vetHospital: {
     type: Schema.Types.ObjectId,
     ref: "VetHospital"

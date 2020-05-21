@@ -15,7 +15,7 @@ class CiteResponseForm extends Component {
             description: '',
             queryClient: this.props.queryObj._id,
             vetHospital: this.props.hospitalObj._id,
-            pet: this.props.petObj._id
+            // pet: this.props.petObj._id
         }
         this.citeService = new CiteService()
     }
@@ -39,7 +39,7 @@ class CiteResponseForm extends Component {
 
 
     render() {
-        console.log(this.props.queryObj.subject)
+        console.log(this.props)
         return (
             <Container>
 

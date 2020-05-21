@@ -46,13 +46,7 @@ class ProfileClient extends Component {
         this.profileService = new ProfileService()
     }
 
-    handleModal = visible => this.setState({ modalShow: visible })
-    handletoast = (visible, text = '') => {
-        const toastCopy = { ...this.state.toast }
-        toastCopy.show = visible
-        toastCopy.text = text
-        this.setState({ toast: toastCopy })
-    }
+
 
     getDetailsProfile = () => {
         this.profileService.getProfile(this.state.profileInfo.id)
@@ -65,23 +59,14 @@ class ProfileClient extends Component {
         this.getDetailsProfile()
     }
 
-    finishPetCreate = () => {
-        this.getDetailsProfile()
-        this.handleModal(false)
-        this.handletoast(true, 'Has creado una nueva mascota')
-    }
-
 
 
     render() {
 
         return (
 
-            <>
                 <Container>
 
-                    <Row>
-                        <Col>
 
                             <h1>Perfil</h1>
 
@@ -104,37 +89,11 @@ class ProfileClient extends Component {
 
                             <Button>Actualizar</Button>
 
-                        </Col>
 
-                        <Col md={{ span: 6}}>
-
-                            <Button onClick={() => this.handleModal(true)} variant="dark">Crear nueva mascota</Button>
-
-                            {this.state.profileInfo.pets && this.state.profileInfo.pets.map(pet => <PetCard key={pet._id} {...pet} />)}
-
-
-
-
-                        </Col>
-                    </Row>
 
                 </Container>
 
-                <Modal show={this.state.modalShow} onHide={() => this.handleModal(false)}>
-                    <Modal.Body>
-                        <PetForm finishPetPost={this.finishPetCreate} ownerID={this.state.profileInfo.id} closeModal={() => this.handleModal(false)} />
-                    </Modal.Body>
-                </Modal>
 
-                <Toast onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
-                    <Toast.Header>
-
-                        <strong className="mr-auto">Mensaje</strong>
-                    </Toast.Header>
-                    <Toast.Body>{this.state.toast.text}</Toast.Body>
-                </Toast>
-
-            </>
         )
     }
 }

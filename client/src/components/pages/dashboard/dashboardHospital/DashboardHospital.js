@@ -93,22 +93,10 @@ class DashboardHospital extends Component {
         return (
             <>
                 <Container as="section" >
-                    <Row>
-                        <Col>
-                            {/* utilizar con estos botones un renderizado condicional
-                         segun el role del usuario */}
+
                          <Button onClick={() => this.handleModal(true)} variant="dark" style={{ marginBottom: '20px' }}>Crear nueva cita</Button>
 
-                        </Col>
-                        <Col>
-                            <Button></Button>
 
-                        </Col>
-                        <Col>
-                            <Button></Button>
-                        </Col>
-
-                    </Row>
                 </Container>
 
                 <Container as="section" >

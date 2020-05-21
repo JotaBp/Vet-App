@@ -85,14 +85,11 @@ class PetCardClient extends Component {
 
 
 
-    render() {
-        // console.log(this.props)
-        // console.log(this.state.querys)
+    render() {        
 
         return (
             <>
                 <Container as="section">
-
 
 
                     <Row>
@@ -131,8 +128,6 @@ class PetCardClient extends Component {
                                 })}
 
 
-
-
                                 <Card.Footer>
                                     <Button onClick={() => this.handleModal(true)} variant="dark" >Crear Consulta para {this.state.petInfo.name}</Button>
 
@@ -147,7 +142,7 @@ class PetCardClient extends Component {
 
                 <Modal show={this.state.modalShow} onHide={() => this.handleModal(false)}>
                     <Modal.Body>
-                        <QueryForm finishQueryCreate={this.finishQueryPost} petId={this.state.petInfo._id} hospitalArr={this.state.petInfo.vetHospital} closeModal={() => this.handleModal(false)} />
+                        <QueryForm finishQueryCreate={this.finishQueryPost} petId={this.state.petInfo.id} hospitalArr={this.state.petInfo.vetHospital} closeModal={() => this.handleModal(false)} />
                     </Modal.Body>
                 </Modal>
 

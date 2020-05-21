@@ -35,7 +35,8 @@ router.post('/createPet', ensureLoggedIn, (req, res, next) => {
     Pet.create(req.body)
         .then(createdPet => User.findByIdAndUpdate(createdPet.owner, {$push: {pets: createdPet._id}}, {new:true}))
         .then(data => res.json(data))
-        .catch(err => next(new Error(err)))
+        .catch(err => { console.log(err)
+            return next(new Error(err))})
 })
 
 //edicion de pet

@@ -63,7 +63,7 @@ class CiteForm extends Component {
                     </Form.Group>
 
                     <Form.Group controlId="select-hospital">
-                        <Form.Label>Selecciona hospital</Form.Label>
+                        <Form.Label>Selecciona mascota</Form.Label>
                         <Form.Control as="select" name="pet" value={this.state.pet} onChange={this.handleInputChange} >
                             <option>Seleccionar</option>
                             {this.displayPets()}

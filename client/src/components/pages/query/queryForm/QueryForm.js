@@ -15,9 +15,8 @@ class QueryForm extends Component {
             subject: '',
             description: '',
             date: '',
-            pet: '',
+            pet: this.props.petId,
             vetHospital: '',
-            petId: this.props.petId
 
         }
         this.queryService = new QueryService()
@@ -25,8 +24,7 @@ class QueryForm extends Component {
 
     displayHospitals = () => {
         return this.props.hospitalArr.map(hospital => {
-            console.log(hospital._id)
-            return (<option value={hospital._id}>{hospital.username}</option>)
+            return (<option key={hospital._id} value={hospital._id}>{hospital.username}</option>)
         })
     }
 
@@ -48,6 +46,7 @@ class QueryForm extends Component {
 
     render() {
         console.log(this.state.vetHospital)
+        console.log(this.props)
         return (
             <Container>
 

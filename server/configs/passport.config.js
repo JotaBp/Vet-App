@@ -20,12 +20,13 @@ module.exports = app => {
     passport.serializeUser((user, next) => next(null, user._id))
     passport.deserializeUser((id, next) => {
         User.findById(id)
-            .populate([{
+            .populate([
+                {
                     path: "queryClient",
                     model: "QueryClient",
                     populate: {
                         path: "answer",
-                        model:"Citehospital"
+                        model:"CiteHospital"
                     }
                 },
                 {
@@ -55,12 +56,13 @@ module.exports = app => {
         User.findOne({
                 username
             })
-            .populate([{
+            .populate([
+                {
                     path: "queryClient",
                     model: "QueryClient",
                     populate: {
                         path: "answer",
-                        model:"Citehospital"
+                        model:"CiteHospital"
                     }
                 },
                 {

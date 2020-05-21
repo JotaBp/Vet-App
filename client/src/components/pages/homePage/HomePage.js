@@ -66,7 +66,7 @@ const HomePage = () => {
                         <Figure>
 
                             <FigureImage
-                                // width={171}
+                                width={350}
                                 // height={180}
                                 alt="Veterinario hípico"
                                 src="images/veterinario_caballos.jpg"
@@ -89,7 +89,7 @@ const HomePage = () => {
                         <Figure>
 
                             <FigureImage
-                                // width={171}
+                                width={400}
                                 // height={180}
                                 alt="veterinaria pequeños animales"
                                 src="images/veterinari_en_accion.jpg"
@@ -133,7 +133,7 @@ const HomePage = () => {
                         <Figure>
 
                             <FigureImage
-                                // width={171}
+                                width={300}
                                 // height={180}
                                 alt="Saludo de los veterinarios haciendo grupo"
                                 src="images/grupo_veterinarios.jpeg"
@@ -155,7 +155,7 @@ const HomePage = () => {
                         <Figure>
 
                             <FigureImage
-                                // width={171}
+                                width={100}
                                 // height={180}
                                 alt="icono e la marca Vet App"
                                 src="images/icono_veterinario.png"
