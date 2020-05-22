@@ -23,8 +23,7 @@ const HomePage = () => {
                         <Figure>
 
                             <FigureImage
-                                // width={171}
-                                // height={180}
+
                                 alt="Soluciones de gestion veterinaria"
                                 src="images/ordenador.jpeg"
                             />
@@ -35,7 +34,7 @@ const HomePage = () => {
 
                     </Col>
 
-                    <Col as="article"  lg={6} md={6}>
+                    <Col as="article"  lg={6} md={6} >
                         <h1>Evoluciona</h1>
 
                         <p>Vet App es el futuro de la gestión veterinaria.

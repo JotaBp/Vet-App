@@ -10,16 +10,10 @@ import QueryCard from '../../query/queryCard/QueryCard'
 import CiteForm from '../../cites/citesForm/CiteForm'
 
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Figure from 'react-bootstrap/Figure'
-import FigureImage from 'react-bootstrap/FigureImage'
-import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Toast from 'react-bootstrap/Toast'
 import Modal from 'react-bootstrap/Modal'
 
-import { Link } from 'react-router-dom'
 
 
 class DashboardHospital extends Component {
@@ -60,7 +54,7 @@ class DashboardHospital extends Component {
 
     getQueryInfo = () => {
         this.queryService.queryFromHospital(this.state.userInfo.id)
-        // .then(response => this.setState({ querys: response.data }))
+        .then(response => this.setState({ querys: response.data }))
         .catch(err => console.log(err))
     }
     
@@ -76,26 +70,17 @@ class DashboardHospital extends Component {
         this.handletoast(true, 'Cita creada en BBDD')
     }
 
-
-    // 1. Formulario creación de query en el Dashboard Cliente
-    // 2. Ruta del back que crea la query y en el then la vincula al user y al hospital (Revisar lo hecho en el cite.routes)
-    // 3. Preparar formulario respuesta del hospital
-    // 4. Ruta del back respuesta del hospital que hace un findByIdAndUpdate y actualiza el campo de answer
-    // 5. En este punto, el usuario y el hospital deben ver la respuesta (preparar el campo en front con render condicional tipo if query.answer && <p>{answer}</p>)
-
     
 
     render() {
 
-        // console.log(this.props.loggedInUser._id)
-        // console.log(this.state.cites)
-        console.log(this.state.querys)
+
 
         return (
-            <>
+            <Container className="content-dashboard">
                 <Container as="section" >
 
-                         <Button onClick={() => this.handleModal(true)} variant="dark" style={{ marginBottom: '20px' }}>Crear nueva cita</Button>
+                         <Button onClick={() => this.handleModal(true)} variant="dark" >Crear nueva cita</Button>
 
 
                 </Container>
@@ -132,7 +117,7 @@ class DashboardHospital extends Component {
                     </Toast.Header>
                     <Toast.Body>{this.state.toast.text}</Toast.Body>
                 </Toast>
-            </>
+            </Container>
 
         )
     }

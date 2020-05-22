@@ -6,3 +6,7 @@
     display: flex;
     justify-content: center;
 }
+
+h5.card-subtitle{
+    background-color: #ffffff;
+}

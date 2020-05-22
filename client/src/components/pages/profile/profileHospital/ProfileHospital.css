@@ -1,3 +1,7 @@
 .col{
     width: 100%;
 }
+
+h5.card-subtitle{
+    background-color: #ffffff;
+}

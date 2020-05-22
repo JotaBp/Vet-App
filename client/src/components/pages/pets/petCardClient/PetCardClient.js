@@ -32,8 +32,8 @@ class PetCardClient extends Component {
                 vetHospital: this.props.vetHospital,
 
             },
-                cites: "",
-                querys: "",
+            cites: "",
+            querys: "",
 
 
             toast: {
@@ -57,8 +57,8 @@ class PetCardClient extends Component {
 
     getQuerysInfo = () => {
         this.queryService.queryFromPet(this.props._id)
-            .then(response => {console.log(response.data) 
-                // return this.setState({ querys: response.data })
+            .then(response => {
+                return this.setState({ querys: response.data })
             })
             .catch(err => console.log(err))
     }
@@ -82,8 +82,6 @@ class PetCardClient extends Component {
 
 
     render() {
-        console.log(this.state.querys)
-        console.log(this.props.vetHospital)
 
         return (
             <>
@@ -101,27 +99,28 @@ class PetCardClient extends Component {
                                     <ListGroup.Item>{this.state.petInfo.breed}</ListGroup.Item>
                                 </ListGroup>
 
-                                <h4>Consultas</h4>
+                                <h4 className="query" >Consultas</h4>
 
                                 {this.state.querys && this.state.querys.map(query => {
 
-                                    console.log(query.citeHospital)
 
                                     return (
-                                        
+
                                         <Card.Body className="body" key={query._id}>
                                             <Card.Title>{query.subject}</Card.Title>
                                             <Card.Subtitle>{query.date}</Card.Subtitle>
-                                            <Card.Text >{query.description}</Card.Text>
+                                            <Card.Text as="p" className="card-text">{query.description}</Card.Text>
+                                            {query.citeHospital && <Card style={{ display: query.citeHospital.description ? 'block' : 'none' }}>
 
-                                            <Card.Title>Respuesta</Card.Title>
-                                            <Card.Text>{query.citeHospital.description}</Card.Text>
-                                            
+                                                <Card.Title as="h5" className="card-title-response">Respuesta</Card.Title>
+                                                <Card.Text as="p" className="card-text-response">{query.citeHospital.description}</Card.Text>
+
+                                            </Card>}
                                         </Card.Body>
-                                        )
+                                    )
                                 })}
 
-                                <h4>Citas</h4>
+                                <h4 className="cite">Citas</h4>
 
                                 {this.state.cites && this.state.cites.map(cite => {
 
@@ -130,9 +129,9 @@ class PetCardClient extends Component {
                                         <Card.Body className="body" key={cite._id}>
                                             <Card.Title>{cite.subject}</Card.Title>
                                             <Card.Subtitle>{cite.date}</Card.Subtitle>
-                                            <Card.Subtitle >{cite.description}</Card.Subtitle>
+                                            <Card.Text as="p" className="card-text">{cite.description}</Card.Text>
                                         </Card.Body>
-                                        )
+                                    )
                                 })}
 
 
@@ -154,7 +153,7 @@ class PetCardClient extends Component {
                     </Modal.Body>
                 </Modal>
 
-                <Toast onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
+                <Toast className="toast-window" onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
                     <Toast.Header>
                         <strong className="mr-auto">Mensaje</strong>
                     </Toast.Header>

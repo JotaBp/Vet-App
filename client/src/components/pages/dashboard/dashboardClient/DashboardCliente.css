@@ -1,3 +1,10 @@
+.content-dashboard{
+    display: grid;
+    justify-content: center;
+}
+
+
+
 .modal-window{
     background-color: transparent;
 }

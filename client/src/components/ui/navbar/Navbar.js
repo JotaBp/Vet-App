@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import './Navbar.css'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-// import Logo from 'images/icono_veterinario.png'
 import AuthService from '../../../service/auth.service'
 
 import { Link } from 'react-router-dom'

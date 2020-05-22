@@ -1,3 +1,17 @@
+
+.content-dashboard{
+    display: grid;
+    justify-content: center;
+}
+.content-dashboard button{
+    width: 100%;
+    margin: 20px 0px;
+}
+
+.content-dashboard h1{
+    margin: 25px 0px 50px;
+}
+
 .modal-window{
     background-color: transparent;
 }
@@ -8,4 +22,16 @@
 .tostada{
     position: fixed;
     z-index: 10000;
+}
+h5.card-title{
+    background-color: #ffffff;
+}
+
+h6.card-title{
+    padding: 10px 20px;
+    background-color: rgb(75, 168, 230);
+}
+
+h4.header-cite-card.card-header{
+    background-color: rgb(246, 191, 88);
 }

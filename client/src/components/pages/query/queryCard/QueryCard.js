@@ -8,7 +8,6 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Modal from 'react-bootstrap/Modal'
 
-import { Link } from 'react-router-dom'
 import CiteResponseForm from '../../cites/citeResposeForm/CiteResponseForm'
 
 class QueryCard extends Component {
@@ -27,7 +26,7 @@ class QueryCard extends Component {
       },
 
       citeHospitalResponse: {
-        description: this.props.citeHospital.description
+        description: this.props.citeHospital && this.props.citeHospital.description
       },
 
       toast: {
@@ -48,20 +47,19 @@ class QueryCard extends Component {
 
 
   render() {
-    console.log(this.props)
     return (
       <>
-        <Card as="article">
-          <Card.Header as="h5">Consulta: {this.state.queryInfo.status}</Card.Header>
-          <Card.Body>
-            <Card.Title>{this.state.queryInfo.subject}</Card.Title>
+        <Card as="article" className="query-card">
+          <Card.Header as="h4" className="header-query-card">Consulta</Card.Header>
+          <Card.Body as="body">
+            <Card.Title as="h5">{this.state.queryInfo.subject}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">{this.state.queryInfo.date}</Card.Subtitle>
             <Card.Text as="p">
               {this.state.queryInfo.description}
             </Card.Text>
-            <Card style={{ display: this.state.citeHospitalResponse.description ? 'block' : 'none' }}>
-              <Card.Title>Respuesta</Card.Title>
-              <Card.Text as="p">{this.state.citeHospitalResponse.description}</Card.Text>
+            <Card className="response-query-card" style={{ display: this.state.citeHospitalResponse.description ? 'block' : 'none' }}>
+              <Card.Title as="h6">Respuesta</Card.Title>
+              <Card.Text as="p" className="response-query-card-text">{this.state.citeHospitalResponse && this.state.citeHospitalResponse.description}</Card.Text>
             </Card>
             <Button onClick={() => this.handleModal(true)} variant="dark" >Responder</Button>
           </Card.Body>

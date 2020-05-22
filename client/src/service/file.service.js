@@ -10,4 +10,5 @@ export default class Services {
     }
 
     handleUpload = theFile => this.service.post('/upload', theFile)
+    handleUploadProfileImage = theFile => this.service.post('/profileSignupUpload', theFile)
 }

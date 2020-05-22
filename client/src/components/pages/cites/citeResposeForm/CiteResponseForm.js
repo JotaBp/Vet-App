@@ -15,7 +15,6 @@ class CiteResponseForm extends Component {
             description: '',
             queryClient: this.props.queryObj._id,
             vetHospital: this.props.hospitalObj._id,
-            // pet: this.props.petObj._id
         }
         this.citeService = new CiteService()
     }

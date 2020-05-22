@@ -44,10 +44,7 @@ class PetForm extends Component {
     }
 
     displayHospitals = () => {
-         this.state.vetHospitals && this.state.vetHospitals.map( hospital => {
-            console.log(hospital)
-
-             
+         this.state.vetHospitals && this.state.vetHospitals.map( hospital => {             
             return (<option value={hospital._id}>{hospital.username}</option>)})
     }
 
@@ -72,7 +69,6 @@ class PetForm extends Component {
         uploadData.append("petPicPath", e.target.files[0])
         this.filesService.handleUpload(uploadData)
             .then(response => {
-                console.log('Subida de archivo finalizada! La URL de Cloudinray es: ', response.data.secure_url)
                 this.setState({
                   petCreated:  {...this.state.petCreated, petPicPath: response.data.secure_url}
                 })
@@ -89,14 +85,12 @@ class PetForm extends Component {
 
 
     componentDidMount = () => {
-        !this.state.vetHospitals && this.getVetHospitals() //esto es para que lo haga solo una vez, si no entra en bucle infinito por el setState de la función
+        !this.state.vetHospitals && this.getVetHospitals() 
     }
 
     displayHospitals = () => {
          return this.state.vetHospitals && this.state.vetHospitals.map( hospital => {
-            console.log(hospital)
-
-             
+                     
             return (<option value={hospital._id}>{hospital.username}</option>)})
     }
 

@@ -11,8 +11,6 @@ export default class services {
 
     getProfile = (idUser) => this.service.get(`/${idUser}`)
     getOnlyVetHospital = () => this.service.get(`/onlyVetHospital`)
-    // getDetailsToUpdateProfile = (id) => this.service.get(`/${id}/edit`)
-    // updateProfile  = (id, data) => this.service.put(`/${id}/edit`, {data})
-    // deleteProfile = (id) => this.service.post(`/${id}/delete`)
+
 
 }

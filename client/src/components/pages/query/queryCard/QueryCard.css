@@ -1,0 +1,16 @@
+h5.card-title{
+    background-color: #ffffff;
+}
+
+h6.card-title{
+    padding: 10px 20px;
+    background-color: rgb(75, 168, 230);
+}
+
+h4.header-query-card.card-header{
+    background-color: rgb(170, 240, 170);
+}
+
+.response-query-card-text{
+    padding: 10px;
+}

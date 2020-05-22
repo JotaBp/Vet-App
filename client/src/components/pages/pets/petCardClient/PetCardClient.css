@@ -5,16 +5,45 @@
 }
 
 .card h4{
+    padding: 15px 0px;
     background-color: inherit;
     display: flex;
     justify-content: center;
-    background-color: honeydew;
     font-weight: bold;
 }
 
+.card-text{
+    background-color: inherit;
+}
+h5.card-title-response{
+    padding: 10px 20px;
+    background-color: rgb(75, 168, 230);
+
+}
+
+h4.query{
+    padding: 10px 20px;
+    background-color: rgb(170, 240, 170);
+}
+
+h4.cite{
+    background-color: rgb(246, 191, 88);
+}
+
+.card-text-response{
+    padding: 10px;
+}
 .modal-window{
     background-color: transparent;
 }
 .modal-body{
+    background-color: inherit;
+}
+
+.toast-window{
+    color: rgb(54, 54, 54);
+}
+
+.toast-window strong, span{
     background-color: inherit;
 }

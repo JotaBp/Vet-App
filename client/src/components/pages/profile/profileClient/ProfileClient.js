@@ -4,18 +4,13 @@ import './ProfileClient.css'
 
 import ProfileService from '../../../../service/profile.service'
 
-import PetCard from '../../pets/petsList/PetCard'
-import PetForm from '../../pets/petsForm/PetForm'
-
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
 import Figure from 'react-bootstrap/Figure'
 import FigureImage from 'react-bootstrap/FigureImage'
-import Toast from 'react-bootstrap/Toast'
-import Modal from 'react-bootstrap/Modal'
 
+import Card from 'react-bootstrap/Card'
 
 class ProfileClient extends Component {
 
@@ -46,20 +41,15 @@ class ProfileClient extends Component {
         this.profileService = new ProfileService()
     }
 
-
-
     getDetailsProfile = () => {
         this.profileService.getProfile(this.state.profileInfo.id)
             .then(response => this.setState({ profileInfo: response.data }))
             .catch(err => console.log(err))
     }
 
-
     componentDidMount = () => {
         this.getDetailsProfile()
     }
-
-
 
     render() {
 
@@ -82,19 +72,20 @@ class ProfileClient extends Component {
                     </Col>
                     <Col as="article">
 
-                        <h4>Nombre de usuario:</h4>
+                        <Card className="profile-card-client">
+                            <Card.Header>Hola {this.state.profileInfo.username} este es tu perfil de usuario:</Card.Header>
+                            <Card.Body>
+                                <Card.Subtitle as="h5">Email de contacto:</Card.Subtitle>
+                                <Card.Text as="p">{this.state.profileInfo.email}</Card.Text>
+                                <Card.Subtitle as="h5">Domicilio:</Card.Subtitle>
+                                <Card.Text as="p">{this.state.profileInfo.address}</Card.Text>
+                                <Card.Subtitle as="h5">Telefono de contact:</Card.Subtitle>
+                                <Card.Text as="p">{this.state.profileInfo.phoneNumber}</Card.Text>
+                                <Card.Subtitle as="h5">Estado de la cuenta:</Card.Subtitle>
+                                <Card.Text as="p">{this.state.profileInfo.status}</Card.Text>
+                            </Card.Body>
 
-                        <p>{this.state.profileInfo.username}</p>
-                        <h4>Email de contacto:</h4>
-                        <p>{this.state.profileInfo.email}</p>
-                        <h4>Domicilio:</h4>
-                        <p>{this.state.profileInfo.address}</p>
-                        <h4>Telefono de contact:</h4>
-                        <p>{this.state.profileInfo.emaphoneNumberil}</p>
-                        <h4>Estado de la cuenta:</h4>
-                        <p>{this.state.profileInfo.status}</p>
-
-                        {/* <Button>Actualizar</Button> */}
+                        </Card>
                     </Col>
                 </Row>
 

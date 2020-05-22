@@ -5,13 +5,8 @@ import './PetCard.css'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
-import Button from 'react-bootstrap/Button'
-
-import { Link } from 'react-router-dom'
-
 
 const PetCard = props => {
-    console.log(props)
     return (
 
         <Col xs={12} md={6} lg={4} as="article">
@@ -27,7 +22,6 @@ const PetCard = props => {
                 <ListGroup>
                     <ListGroup.Item variant="dark">{props.species}</ListGroup.Item>
                 </ListGroup>
-                {/* <Button variant="dark"><Link to="">Detalles</Link></Button> */}
             </Card>
         </Col>
 

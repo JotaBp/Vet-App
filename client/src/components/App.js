@@ -25,7 +25,7 @@ class App extends Component {
     this.authService = new AuthService()
   }
 
-  setTheUser = userObj => this.setState({ loggedInUser: userObj }, () => console.log('El estado de App ha cambiado:', this.state))
+  setTheUser = userObj => this.setState({ loggedInUser: userObj })
 
   fetchUser = () => {
     if (this.state.loggedInUser === null) {
@@ -37,8 +37,6 @@ class App extends Component {
 
 
   render() {
-
-    console.log(this.state.loggedInUser)
 
     this.fetchUser()
 
@@ -88,7 +86,6 @@ class App extends Component {
               else { return (<Redirect to="/login" />) }
             }} />
 
-            {/* <Route path="/profile/:id/edit" exact render={props => <HospitalProfile {...props} /> }/> */}
           </Switch>
 
         </main>

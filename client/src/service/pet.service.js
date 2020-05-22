@@ -13,6 +13,3 @@ export default class services {
 
 
 }
-
-
-// baseURL: 'http://localhost:5000/api'

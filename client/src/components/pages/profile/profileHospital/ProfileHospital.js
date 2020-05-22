@@ -9,14 +9,10 @@ import PetCard from '../../pets/petsList/PetCard'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 import Figure from 'react-bootstrap/Figure'
 import FigureImage from 'react-bootstrap/FigureImage'
-import Toast from 'react-bootstrap/Toast'
-import Modal from 'react-bootstrap/Modal'
 
-import { Link } from 'react-router-dom'
+import Card from 'react-bootstrap/Card'
 
 class HospitalProfile extends Component {
 
@@ -30,7 +26,7 @@ class HospitalProfile extends Component {
                 surname: '',
                 email: '',
                 password: '',
-                profilePicPath: '',
+                hospitalPicPath: '',
                 address: '',
                 phoneNumber: '',
                 status: '',
@@ -51,13 +47,7 @@ class HospitalProfile extends Component {
         this.profileService = new ProfileService()
     }
 
-    // handleModal = visible => this.setState({ modalShow: visible })
-    // handletoast = (visible, text = '') => {
-    //     const toastCopy = { ...this.state.toast }
-    //     toastCopy.show = visible
-    //     toastCopy.text = text
-    //     this.setState({ toast: toastCopy })
-    // }
+
 
 
     getDetailsProfile = () => {
@@ -75,8 +65,6 @@ class HospitalProfile extends Component {
 
     render() {
 
-        console.log(this.state.profileInfo)
-
         return (
 
             <>
@@ -90,27 +78,29 @@ class HospitalProfile extends Component {
                             <Figure>
 
                                 <FigureImage
-                                    // width={171}
-                                    // height={180}
+
                                     alt="Foto de perfil del usuario"
-                                    src={this.state.profileInfo.profilePicPath}
+                                    src={this.state.profileInfo.hospitalPicPath}
                                 />
 
                             </Figure>
-                        </Col><Col>
-                            <h4>Nombre de usuario:</h4>
-                            <p>{this.state.profileInfo.username}</p>
+                        </Col>
+                        <Col>
 
-                            <h4>Email:</h4>
-                            <p>{this.state.profileInfo.email}</p>
-                            <h4>Direcion:</h4>
-                            <p>{this.state.profileInfo.address}</p>
-                            <h4>Numero de telefono:</h4>
-                            <p>{this.state.profileInfo.phoneNumber}</p>
-                            <h4>Estado de la cuenta:</h4>
-                            <p>{this.state.profileInfo.status}</p>
+                            <Card className="profile-card-hospital">
+                                <Card.Header>Hola {this.state.profileInfo.username} este es tu perfil de usuario:</Card.Header>
+                                <Card.Body>
+                                    <Card.Subtitle as="h5">Email de contacto:</Card.Subtitle>
+                                    <Card.Text as="p">{this.state.profileInfo.email}</Card.Text>
+                                    <Card.Subtitle as="h5">Domicilio:</Card.Subtitle>
+                                    <Card.Text as="p">{this.state.profileInfo.address}</Card.Text>
+                                    <Card.Subtitle as="h5">Telefono de contacto:</Card.Subtitle>
+                                    <Card.Text as="p">{this.state.profileInfo.phoneNumber}</Card.Text>
+                                    <Card.Subtitle as="h5">Estado de la cuenta:</Card.Subtitle>
+                                    <Card.Text as="p">{this.state.profileInfo.status}</Card.Text>
+                                </Card.Body>
+                            </Card>
 
-                            {/* <Button>Actualizar</Button> */}
                         </Col>
 
 
@@ -119,28 +109,11 @@ class HospitalProfile extends Component {
                 </Container>
 
                 <Container>
+                    <h1>Clientes del hospital</h1>
                     <Row>
                         {this.state.profileInfo.pets && this.state.profileInfo.pets.map(pet => <PetCard key={pet._id} {...pet} />)}
                     </Row>
                 </Container>
-
-
-
-
-
-                {/* <Modal show={this.state.modalShow} onHide={() => this.handleModal(false)}>
-                    <Modal.Body>
-                        <HospitalProfileForm closeModal={() => this.handleModal(false)} />
-                    </Modal.Body>
-                </Modal>
-
-                <Toast onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
-                    <Toast.Header>
-
-                        <strong className="mr-auto">Mensaje</strong>
-                    </Toast.Header>
-                    <Toast.Body>{this.state.toast.text}</Toast.Body>
-                </Toast> */}
 
             </>
         )

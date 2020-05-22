@@ -45,8 +45,7 @@ class QueryForm extends Component {
     }
 
     render() {
-        console.log(this.state.vetHospital)
-        console.log(this.props)
+
         return (
             <Container>
 
@@ -74,10 +73,6 @@ class QueryForm extends Component {
                         </Form.Control>
                     </Form.Group>
 
-                    {/* <Form.Group controlId="img">
-                        <Form.Label>Imagen (URL)</Form.Label>
-                        <Form.Control name="imageUrl" type="text" value={this.state.imageUrl} onChange={this.handleInputChange} />
-                    </Form.Group> */}
                     <Button variant="dark" onClick={() => this.props.closeModal()} style={{ marginRight: '10px' }}>Cerrar</Button>
                     <Button variant="dark" type="submit">Nueva consulta</Button>
                 </Form>

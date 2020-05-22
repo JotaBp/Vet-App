@@ -41,11 +41,13 @@ class Signup extends Component {
 
         this.setState({ signUpInfo: signUpInfoCopy })
     }
+    
 
 
 
     handleSubmit = e => {
         e.preventDefault()
+        
         this.authService.signup(this.state.signUpInfo)
             .then(response => {
                 this.props.setTheUser(response.data)
@@ -56,19 +58,7 @@ class Signup extends Component {
             })
     }
 
-    handleFileUpload = e => {
 
-        const uploadData = new FormData()
-        uploadData.append("profilePicPath", e.target.files[0])
-        this.filesService.handleUpload(uploadData)
-            .then(response => {
-                console.log('Subida de archivo finalizada! La URL de Cloudinray es: ', response.data.secure_url)
-                this.setState({
-                    signUpInfo: { ...this.state.signUpInfo, profilePicPath: response.data.secure_url }
-                })
-            })
-            .catch(err => console.log(err))
-    }
 
 
 
@@ -78,7 +68,7 @@ class Signup extends Component {
             <Container>
 
                 <Row>
-                    <Col md={{ span: 4, offset: 4 }}>
+                    <Col md={{ span: 6, offset: 4 }}>
 
                         <h3>Registro de usuario</h3>
                         <hr></hr>
@@ -103,10 +93,7 @@ class Signup extends Component {
                                 </Form.Control>
                             </Form.Group>
                             
-                            <Form.Group controlId="img">
-                                <Form.Label>Foto de Usuario</Form.Label>
-                                <Form.Control name="profilePicPath" type="file" onChange={this.handleFileUpload} />
-                            </Form.Group>
+
 
                             <Form.Group controlId="pwd">
                                 <Form.Label>Contraseña</Form.Label>
