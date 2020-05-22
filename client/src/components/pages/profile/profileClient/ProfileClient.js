@@ -65,33 +65,40 @@ class ProfileClient extends Component {
 
         return (
 
-                <Container>
+            <Container as="section" className="container-profile">
+                <Row>
+                    <Col as="article">
+                        <h1>Perfil</h1>
 
+                        <Figure className="img-profile">
 
-                            <h1>Perfil</h1>
+                            <FigureImage
 
-                            <Figure>
+                                alt="Foto de perfil del usuario"
+                                src={this.state.profileInfo.profilePicPath}
+                            />
 
-                                <FigureImage
+                        </Figure>
+                    </Col>
+                    <Col as="article">
 
-                                    alt="Foto de perfil del usuario"
-                                    src={this.state.profileInfo.profilePicPath}
-                                />
+                        <h4>Nombre de usuario:</h4>
 
-                            </Figure>
+                        <p>{this.state.profileInfo.username}</p>
+                        <h4>Email de contacto:</h4>
+                        <p>{this.state.profileInfo.email}</p>
+                        <h4>Domicilio:</h4>
+                        <p>{this.state.profileInfo.address}</p>
+                        <h4>Telefono de contact:</h4>
+                        <p>{this.state.profileInfo.emaphoneNumberil}</p>
+                        <h4>Estado de la cuenta:</h4>
+                        <p>{this.state.profileInfo.status}</p>
 
-                            <h3>{this.state.profileInfo.username}</h3>
+                        {/* <Button>Actualizar</Button> */}
+                    </Col>
+                </Row>
 
-                            <h3>{this.state.profileInfo.email}</h3>
-                            <h3>{this.state.profileInfo.address}</h3>
-                            <h3>{this.state.profileInfo.emaphoneNumberil}</h3>
-                            <h3>{this.state.profileInfo.status}</h3>
-
-                            <Button>Actualizar</Button>
-
-
-
-                </Container>
+            </Container>
 
 
         )

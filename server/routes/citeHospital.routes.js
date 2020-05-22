@@ -80,7 +80,7 @@ router.post('/createCiteResponse', ensureLoggedIn, (req, res, next) => {
         .then((createdCiteResponse)=>{
           let updateUser = User.findByIdAndUpdate(createdCiteResponse.vetHospital, {$push: {citeHospital: createdCiteResponse._id}}, {new:true})
           let updatePet = Pet.findByIdAndUpdate(createdCiteResponse.pet, {$push: {citeHospital: createdCiteResponse._id}}, {new:true})
-          let updateQuery = QueryClient.findByIdAndUpdate(createdCiteResponse.queryClient, {$push: {answer: createdCiteResponse._id}}, {new: true})
+          let updateQuery = QueryClient.findByIdAndUpdate(createdCiteResponse.queryClient, {$push: {citeHospital: createdCiteResponse._id}}, {new: true})
             return Promise.all([updateUser, updatePet, updateQuery])
          })
         .then(data => res.status(200).json(data))

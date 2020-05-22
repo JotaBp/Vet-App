@@ -4,6 +4,7 @@ const router = express.Router()
 const Query = require("../models/queryClient.model")
 const Pet = require("../models/pet.model")
 const User = require("../models/user.model")
+const CiteHospital = require("../models/citeHospital.model")
 
 
 const ensureLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.redirect('/login')
@@ -25,6 +26,11 @@ router.get('/queryFromHospital/:idHospital', ensureLoggedIn, (req, res, next) =>
                     path: "owner",
                     model: "User"
                 }
+
+            },
+            {
+                path: "citeHospital",
+                model: "CiteHospital"
             }
         ])
         .then(data => res.status(200).json(data))
@@ -47,7 +53,12 @@ router.get('/queryFromPet/:idPet', ensureLoggedIn, (req, res, next) => {
                     path: "owner",
                     model: "User"
                 }
+            },
+            {
+                path: "citeHospital",
+                model: "CiteHospital"
             }
+
         ])
         .then(data => res.status(200).json(data))
         .catch(err => next(new Error(err)))
@@ -65,8 +76,20 @@ router.post('/createQuery', ensureLoggedIn, (req, res, next) => {
 
     Query.create(req.body)
         .then(createdQuery => {
-            let updatePet = Pet.findByIdAndUpdate(createdQuery.pet, {$push: {queryClient: createdQuery._id}}, {new:true})
-            let updateHospital = User.findByIdAndUpdate(createdQuery.vetHospital, {$push: {queryClient: createdQuery._id}}, {new:true})
+            let updatePet = Pet.findByIdAndUpdate(createdQuery.pet, {
+                $push: {
+                    queryClient: createdQuery._id
+                }
+            }, {
+                new: true
+            })
+            let updateHospital = User.findByIdAndUpdate(createdQuery.vetHospital, {
+                $push: {
+                    queryClient: createdQuery._id
+                }
+            }, {
+                new: true
+            })
             return Promise.all([updatePet, updateHospital])
 
         })

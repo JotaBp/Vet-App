@@ -1,0 +1,11 @@
+.modal-window{
+    background-color: transparent;
+}
+.modal-body{
+    background-color: inherit;
+}
+
+.tostada{
+    position: fixed;
+    z-index: 10000;
+}

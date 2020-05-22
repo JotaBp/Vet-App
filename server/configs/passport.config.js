@@ -25,7 +25,7 @@ module.exports = app => {
                     path: "queryClient",
                     model: "QueryClient",
                     populate: {
-                        path: "answer",
+                        path: "citeHospital",
                         model:"CiteHospital"
                     }
                 },
@@ -61,7 +61,7 @@ module.exports = app => {
                     path: "queryClient",
                     model: "QueryClient",
                     populate: {
-                        path: "answer",
+                        path: "citeHospital",
                         model:"CiteHospital"
                     }
                 },

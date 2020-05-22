@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import CiteService from '../../../../service/cite.service'
 import QueryService from '../../../../service/query.service'
 
+import './DashboardHospital.css'
 
 import CiteCard from '../../cites/citesCard/CiteCard'
 import QueryCard from '../../query/queryCard/QueryCard'
@@ -59,7 +60,7 @@ class DashboardHospital extends Component {
 
     getQueryInfo = () => {
         this.queryService.queryFromHospital(this.state.userInfo.id)
-        .then(response => this.setState({ querys: response.data }))
+        // .then(response => this.setState({ querys: response.data }))
         .catch(err => console.log(err))
     }
     
@@ -88,7 +89,7 @@ class DashboardHospital extends Component {
 
         // console.log(this.props.loggedInUser._id)
         // console.log(this.state.cites)
-        // console.log(this.state.querys)
+        console.log(this.state.querys)
 
         return (
             <>
@@ -119,13 +120,13 @@ class DashboardHospital extends Component {
 
                 </Container>
 
-                <Modal show={this.state.modalShow} onHide={() => this.handleModal(false)}>
-                    <Modal.Body>
-                        <CiteForm finishCitePost={this.finishCiteCreate} hospitalID={this.props.loggedInUser._id} pets={this.props.loggedInUser.pets} closeModal={() => this.handleModal(false)} />
+                <Modal className="modal-window" show={this.state.modalShow} onHide={() => this.handleModal(false)}>
+                    <Modal.Body >
+                        <CiteForm  finishCitePost={this.finishCiteCreate} hospitalID={this.props.loggedInUser._id} pets={this.props.loggedInUser.pets} closeModal={() => this.handleModal(false)} />
                     </Modal.Body>
                 </Modal>
 
-                <Toast onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
+                <Toast className="tostada" onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
                     <Toast.Header>
                         <strong className="mr-auto">Mensaje</strong>
                     </Toast.Header>

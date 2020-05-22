@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+
 import AuthService from '../../../service/auth.service'
+import FileService from '../../../service/file.service'
+
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -19,11 +22,14 @@ class Signup extends Component {
                 username: '',
                 email: '',
                 password: '',
-                role: '' 
+                role: '',
+                profilePicPath: ''
             },
             errorMessage: ''
         }
         this.authService = new AuthService()
+        this.filesService = new FileService()
+
     }
 
 
@@ -48,6 +54,20 @@ class Signup extends Component {
             .catch(err => {
                 console.log(err)
             })
+    }
+
+    handleFileUpload = e => {
+
+        const uploadData = new FormData()
+        uploadData.append("profilePicPath", e.target.files[0])
+        this.filesService.handleUpload(uploadData)
+            .then(response => {
+                console.log('Subida de archivo finalizada! La URL de Cloudinray es: ', response.data.secure_url)
+                this.setState({
+                    signUpInfo: { ...this.state.signUpInfo, profilePicPath: response.data.secure_url }
+                })
+            })
+            .catch(err => console.log(err))
     }
 
 
@@ -82,6 +102,11 @@ class Signup extends Component {
                                     <option value="CLIENT">Mascotero</option>
                                 </Form.Control>
                             </Form.Group>
+                            
+                            <Form.Group controlId="img">
+                                <Form.Label>Foto de Usuario</Form.Label>
+                                <Form.Control name="profilePicPath" type="file" onChange={this.handleFileUpload} />
+                            </Form.Group>
 
                             <Form.Group controlId="pwd">
                                 <Form.Label>Contraseña</Form.Label>
@@ -108,3 +133,11 @@ class Signup extends Component {
 
 
 export default Signup
+
+
+
+
+
+
+
+

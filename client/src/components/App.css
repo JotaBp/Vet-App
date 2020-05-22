@@ -5,5 +5,11 @@
 
 main {
     padding-top: 125px;
+    color: whitesmoke;
+    
+    
+}
+main img{
+    border-radius: 5px;
     
 }

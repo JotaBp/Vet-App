@@ -18,7 +18,7 @@ const queryClientSchema = new Schema({
         enum: ["pending-client", "closed", "scheduled", "pending-answer"],
         default: "pending-answer"
     },
-    answer: {
+    citeHospital: {
         type: Schema.Types.ObjectId,
         ref: "CiteHospital"
     }

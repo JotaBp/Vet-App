@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+
 import CiteService from '../../../../service/cite.service'
+
+import './CiteForm.css'
 
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
@@ -44,7 +47,7 @@ class CiteForm extends Component {
     
     render() {
         return (
-            <Container>
+            <Container className="form-modal-window">
 
                 <h1>Nueva Cita</h1>
                 <hr></hr>

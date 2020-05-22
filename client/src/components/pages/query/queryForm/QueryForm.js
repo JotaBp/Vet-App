@@ -79,7 +79,7 @@ class QueryForm extends Component {
                         <Form.Control name="imageUrl" type="text" value={this.state.imageUrl} onChange={this.handleInputChange} />
                     </Form.Group> */}
                     <Button variant="dark" onClick={() => this.props.closeModal()} style={{ marginRight: '10px' }}>Cerrar</Button>
-                    <Button variant="dark" type="submit">Nueva cita</Button>
+                    <Button variant="dark" type="submit">Nueva consulta</Button>
                 </Form>
             </Container>
         )

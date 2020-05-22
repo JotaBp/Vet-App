@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import './PetCardClient.css'
+
 import CiteService from '../../../../service/cite.service'
 import QueryService from '../../../../service/query.service'
 
@@ -11,15 +13,8 @@ import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
-import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
 import Toast from 'react-bootstrap/Toast'
-
-
-
-
-import { Link } from 'react-router-dom'
-
 
 
 class PetCardClient extends Component {
@@ -34,13 +29,13 @@ class PetCardClient extends Component {
                 name: this.props.name,
                 species: this.props.species,
                 breed: this.props.breed,
-                vetHospital: this.props.vetHospital
+                vetHospital: this.props.vetHospital,
 
             },
+                cites: "",
+                querys: "",
 
-            cites: "",
-            querys: "",
-            
+
             toast: {
                 show: false,
                 text: ''
@@ -62,7 +57,9 @@ class PetCardClient extends Component {
 
     getQuerysInfo = () => {
         this.queryService.queryFromPet(this.props._id)
-            .then(response => this.setState({ querys: response.data }))
+            .then(response => {console.log(response.data) 
+                // return this.setState({ querys: response.data })
+            })
             .catch(err => console.log(err))
     }
 
@@ -72,20 +69,21 @@ class PetCardClient extends Component {
             .catch(err => console.log(err))
     }
 
+    finishQueryPost = () => {
+        this.getQuerysInfo()
+        this.handleModal(false)
+        this.handletoast(true, 'Consulta enviada al Hospital')
+    }
+
     componentDidMount = () => {
         this.getQuerysInfo()
         this.getCitesInfo()
     }
 
-    finishQueryPost = () => {
-        this.getQuerysInfo()
-        this.handleModal(false)
-        this.handletoast(true, 'Consulta creada en BBDD')
-    }
 
-
-
-    render() {        
+    render() {
+        console.log(this.state.querys)
+        console.log(this.props.vetHospital)
 
         return (
             <>
@@ -94,7 +92,7 @@ class PetCardClient extends Component {
 
                     <Row>
                         <Col as="article">
-                            <Card>
+                            <Card className="card">
                                 <Card.Img variant="top" src={this.state.petInfo.petPicPath} />
 
                                 <Card.Header as="h5">{this.state.petInfo.name}</Card.Header>
@@ -107,24 +105,34 @@ class PetCardClient extends Component {
 
                                 {this.state.querys && this.state.querys.map(query => {
 
-                                    console.log(query)
+                                    console.log(query.citeHospital)
 
-                                    return (<Card.Body key={query._id}>
-                                        <Card.Title>{query.subject}</Card.Title>
-                                        <Card.Subtitle>{query.date}</Card.Subtitle>
-                                        <Card.Subtitle >{query.description}</Card.Subtitle>
-                                    </Card.Body>)
+                                    return (
+                                        
+                                        <Card.Body className="body" key={query._id}>
+                                            <Card.Title>{query.subject}</Card.Title>
+                                            <Card.Subtitle>{query.date}</Card.Subtitle>
+                                            <Card.Text >{query.description}</Card.Text>
+
+                                            <Card.Title>Respuesta</Card.Title>
+                                            <Card.Text>{query.citeHospital.description}</Card.Text>
+                                            
+                                        </Card.Body>
+                                        )
                                 })}
 
                                 <h4>Citas</h4>
 
                                 {this.state.cites && this.state.cites.map(cite => {
 
-                                    return (<Card.Body key={cite._id}>
-                                        <Card.Title>{cite.subject}</Card.Title>
-                                        <Card.Subtitle>{cite.date}</Card.Subtitle>
-                                        <Card.Subtitle >{cite.description}</Card.Subtitle>
-                                    </Card.Body>)
+
+                                    return (
+                                        <Card.Body className="body" key={cite._id}>
+                                            <Card.Title>{cite.subject}</Card.Title>
+                                            <Card.Subtitle>{cite.date}</Card.Subtitle>
+                                            <Card.Subtitle >{cite.description}</Card.Subtitle>
+                                        </Card.Body>
+                                        )
                                 })}
 
 
@@ -140,9 +148,9 @@ class PetCardClient extends Component {
 
                 </Container>
 
-                <Modal show={this.state.modalShow} onHide={() => this.handleModal(false)}>
+                <Modal className="modal-window" show={this.state.modalShow} onHide={() => this.handleModal(false)}>
                     <Modal.Body>
-                        <QueryForm finishQueryCreate={this.finishQueryPost} petId={this.state.petInfo.id} hospitalArr={this.state.petInfo.vetHospital} closeModal={() => this.handleModal(false)} />
+                        <QueryForm finishQueryCreate={this.finishQueryPost} petId={this.state.petInfo.id} hospitalArr={this.props.vetHospital} closeModal={() => this.handleModal(false)} />
                     </Modal.Body>
                 </Modal>
 

@@ -18,7 +18,7 @@ class PetForm extends Component {
             petCreated: {
                 name: '',
                 species: '',
-                // petPicPath: '',
+                petPicPath: '',
                 breed: '',
                 owner: this.props.ownerID,
                 vetHospital: ''
@@ -74,7 +74,7 @@ class PetForm extends Component {
             .then(response => {
                 console.log('Subida de archivo finalizada! La URL de Cloudinray es: ', response.data.secure_url)
                 this.setState({
-                    ...this.state.petCreated,  petCreated: { petPicPath: response.data.secure_url} // Cuidado con el petpicpath que va a petar por aqui
+                  petCreated:  {...this.state.petCreated, petPicPath: response.data.secure_url}
                 })
             })
             .catch(err => console.log(err))
@@ -131,10 +131,10 @@ class PetForm extends Component {
                         </Form.Control>
                     </Form.Group>
 
-                    {/* <Form.Group controlId="img">
+                    <Form.Group controlId="img">
                         <Form.Label>Foto de tu mascota</Form.Label>
-                        <Form.Control name="petPicPath" type="file" value={this.state.petCreated.petPicPath} onChange={this.handleFileUpload} />
-                    </Form.Group> */}
+                        <Form.Control name="petPicPath" type="file" onChange={this.handleFileUpload} />
+                    </Form.Group>
 
                     <Button variant="dark" onClick={() => this.props.closeModal()}>Cerrar</Button>
                     <Button variant="dark" type="submit">Nueva mascota</Button>

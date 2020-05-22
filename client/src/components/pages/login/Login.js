@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AuthService from '../../../service/auth.service'
 
+import './Login.css'
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'

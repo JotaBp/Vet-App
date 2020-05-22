@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import './DashboardCliente.css'
+
 
 // import PetService from '../../../../service/pet.service'
 
@@ -70,7 +72,7 @@ class DashboardClient extends Component {
 
                 </Container>
 
-                <Modal show={this.state.modalShow} onHide={() => this.handleModal(false)}>
+                <Modal className="modal-window" show={this.state.modalShow} onHide={() => this.handleModal(false)}>
                     <Modal.Body>
                         <PetForm finishPetPost={this.finishPetCreate} ownerID={this.state.userInfo.id} closeModal={() => this.handleModal(false)} />
                     </Modal.Body>

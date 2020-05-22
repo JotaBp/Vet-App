@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import './ProfileHospital.css'
+
 import ProfileService from '../../../../service/profile.service'
 
 import PetCard from '../../pets/petsList/PetCard'
@@ -74,6 +76,7 @@ class HospitalProfile extends Component {
     render() {
 
         console.log(this.state.profileInfo)
+
         return (
 
             <>
@@ -94,30 +97,36 @@ class HospitalProfile extends Component {
                                 />
 
                             </Figure>
+                        </Col><Col>
+                            <h4>Nombre de usuario:</h4>
+                            <p>{this.state.profileInfo.username}</p>
 
-                            <h3>{this.state.profileInfo.username}</h3>
+                            <h4>Email:</h4>
+                            <p>{this.state.profileInfo.email}</p>
+                            <h4>Direcion:</h4>
+                            <p>{this.state.profileInfo.address}</p>
+                            <h4>Numero de telefono:</h4>
+                            <p>{this.state.profileInfo.phoneNumber}</p>
+                            <h4>Estado de la cuenta:</h4>
+                            <p>{this.state.profileInfo.status}</p>
 
-                            <h3>{this.state.profileInfo.email}</h3>
-                            <h3>{this.state.profileInfo.address}</h3>
-                            <h3>{this.state.profileInfo.emaphoneNumberil}</h3>
-                            <h3>{this.state.profileInfo.status}</h3>
-
-                            <Button>Actualizar</Button>
-
+                            {/* <Button>Actualizar</Button> */}
                         </Col>
 
-                        <Col>
 
-
-                            {this.state.profileInfo.pets && this.state.profileInfo.pets.map(pet => <PetCard key={pet._id} {...pet} />)}
-
-
-
-
-                        </Col>
                     </Row>
 
                 </Container>
+
+                <Container>
+                    <Row>
+                        {this.state.profileInfo.pets && this.state.profileInfo.pets.map(pet => <PetCard key={pet._id} {...pet} />)}
+                    </Row>
+                </Container>
+
+
+
+
 
                 {/* <Modal show={this.state.modalShow} onHide={() => this.handleModal(false)}>
                     <Modal.Body>
@@ -136,7 +145,7 @@ class HospitalProfile extends Component {
             </>
         )
     }
-    
+
 }
 
 export default HospitalProfile

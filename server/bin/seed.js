@@ -73,7 +73,7 @@ function createHospital() {
     address: faker.address.streetAddress(),
     email: faker.internet.email(),
     password: bcrypt.hashSync('123', salt),
-    hospitalPicPath: faker.image.nature(),
+    profilePicPath: faker.image.nature(),
     phoneNumber: faker.phone.phoneNumber(),
     rating: randomNum(10),
     chiefVetName: faker.name.firstName(),
@@ -111,6 +111,7 @@ function createQuery() {
     description: faker.lorem.text(),
     date: faker.date.future(),
     status: "closed",
+    citeHospital: allCiteHospitals[randomNum(allCiteHospitals.length)]._id,
     vetHospital: allVetHospitals[randomNum(allVetHospitals.length)]._id
   }
 }
@@ -238,6 +239,14 @@ Promise.resolve([dropUser, dropPet, dropCiteHospital, dropQueryClient])
         new: true
       }))
 
+      promises.push(CiteHospital.findByIdAndUpdate(query.citeHospital, {
+        $push: {
+          queryClient: query._id
+        }
+      }, {
+        new:true
+      }))
+
 
     })
     return Promise.all(promises)
@@ -258,12 +267,8 @@ Promise.resolve([dropUser, dropPet, dropCiteHospital, dropQueryClient])
   })
   .then(updatedCites => {
     let promises = []
-    console.log(updatedCites)
-    updatedCites.forEach(cite => {
 
-      // console.log("que hay en cite:" + cite)
-      // console.log("que hay en cite.pet:" + cite.pet)
-      // console.log("que hay en cite.vetHospital:" + cite.vetHospital)
+    updatedCites.forEach(cite => {
 
       promises.push(QueryClient.findByIdAndUpdate(cite.queryClient, {
         pet: cite.pet,
@@ -291,4 +296,4 @@ Promise.resolve([dropUser, dropPet, dropCiteHospital, dropQueryClient])
   // iterar con un foreach los hospitales e ir creando un número de consultas
   // a las que les asignas un random Client con su mascota y contenido Lorem
   // })
-  .catch(err => console.log(`An error occurred while creating the CLIENT: ${err}`))
+  // .catch(err => console.log(`An error occurred while creating the CLIENT: ${err}`))

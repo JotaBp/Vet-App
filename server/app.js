@@ -22,8 +22,7 @@ app.use('/api/cite', require('./routes/citeHospital.routes'))
 app.use('/api/pet', require('./routes/pet.routes'))
 app.use('/api/query', require('./routes/queryClient.routes'))
 app.use('/api/profile', require('./routes/profile.routes'))
-
-// app.use('/api/files', require('./routes/files.routes'))
+app.use('/api/files', require('./routes/files.routes'))
 
 
 app.use((req,res)=>{

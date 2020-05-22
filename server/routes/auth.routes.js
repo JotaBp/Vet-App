@@ -11,7 +11,7 @@ const bcryptSalt = 10
 
 router.post('/signup', (req, res, next) => {
 
-    const { username, password, email, role } = req.body
+    const { username, password, email, role, profilePicPath } = req.body
 
     console.log(`console log req.body${req.body}`)
 
@@ -45,7 +45,8 @@ router.post('/signup', (req, res, next) => {
             username,
             email,
             password: hashPass,
-            role
+            role,
+            profilePicPath
         });
 
         aNewUser.save(err => {console.log(err)
@@ -81,7 +82,6 @@ router.post('/login', (req, res, next) => {
 
         
         if (err) {
-            console.log(err)
             res.status(500).json({ message: 'Something went wrong authenticating user' });
             return;
         }
@@ -96,7 +96,6 @@ router.post('/login', (req, res, next) => {
         // save user in session
         req.login(theUser, (err) => {
             if (err) {
-                console.log(err)
                 res.status(500).json({ message: 'Session save went bad.' });
                 return;
             }
