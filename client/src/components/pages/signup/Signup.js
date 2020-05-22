@@ -68,7 +68,7 @@ class Signup extends Component {
             <Container>
 
                 <Row>
-                    <Col md={{ span: 6, offset: 4 }}>
+                    <Col md={{ span: 6, offset: 3 }}>
 
                         <h3>Registro de usuario</h3>
                         <hr></hr>
