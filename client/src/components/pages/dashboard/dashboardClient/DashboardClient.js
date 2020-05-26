@@ -11,6 +11,8 @@ import Modal from 'react-bootstrap/Modal'
 
 import PetCardClient from '../../pets/petCardClient/PetCardClient'
 
+import PetService from '../../../../service/pet.service'
+
 
 class DashboardClient extends Component {
 
@@ -19,7 +21,7 @@ class DashboardClient extends Component {
         this.state = { 
             userInfo: {
                 id: this.props.loggedInUser._id,
-                pets: this.props.loggedInUser.pets
+                pets: []
             },
             toast: {
                 show: false,
@@ -28,6 +30,9 @@ class DashboardClient extends Component {
             modalShow: false,
 
         }
+
+        this.petService = new PetService()
+
 
     }
 
@@ -38,13 +43,28 @@ class DashboardClient extends Component {
         toastCopy.text = text
         this.setState({ toast: toastCopy })
     }
+
+    getPetsFromClient = () => {
+        this.petService.getPetsFromClient(this.state.userInfo.id)
+            .then(response => { console.log(response.data)
+                return this.setState({ userInfo: { pets: response.data }})})
+            .catch(err => console.log(err))
+    }
     
     finishPetCreate = () => {
+        this.getPetsFromClient()
         this.handleModal(false)
         this.handletoast(true, 'Has creado una nueva mascota')
     }
 
+    componentDidMount = () => {
+        this.getPetsFromClient()
+    }
+
+
     render() {
+
+        console.log(this.state.userInfo.pets)
 
 
         return (
@@ -61,7 +81,7 @@ class DashboardClient extends Component {
 
                 <Modal className="modal-window" show={this.state.modalShow} onHide={() => this.handleModal(false)}>
                     <Modal.Body>
-                        <PetForm finishPetPost={this.finishPetCreate} ownerID={this.state.userInfo.id} closeModal={() => this.handleModal(false)} />
+                        <PetForm finishPetPost={this.finishPetCreate} ownerID={this.props.loggedInUser._id} closeModal={() => this.handleModal(false)} />
                     </Modal.Body>
                 </Modal>
 

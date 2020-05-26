@@ -4,6 +4,8 @@ import './PetCardClient.css'
 
 import CiteService from '../../../../service/cite.service'
 import QueryService from '../../../../service/query.service'
+import PetService from '../../../../service/pet.service'
+
 
 import QueryForm from '../../query/queryForm/QueryForm'
 
@@ -44,6 +46,7 @@ class PetCardClient extends Component {
         }
         this.citeService = new CiteService()
         this.queryService = new QueryService()
+        this.petService = new PetService()
 
     }
 
@@ -69,6 +72,11 @@ class PetCardClient extends Component {
             .catch(err => console.log(err))
     }
 
+    handleDelete = (petId) => {
+        this.petService.deletePet(petId)
+            .catch(err => console.log(err))
+    }
+
     finishQueryPost = () => {
         this.getQuerysInfo()
         this.handleModal(false)
@@ -79,6 +87,8 @@ class PetCardClient extends Component {
         this.getQuerysInfo()
         this.getCitesInfo()
     }
+
+    //Falla el delete y el create, se crean y se eliminan los registros, pero no se actuliza la pagina en el momento en el que se produce la accion
 
 
     render() {
@@ -94,6 +104,8 @@ class PetCardClient extends Component {
                                 <Card.Img variant="top" src={this.state.petInfo.petPicPath} />
 
                                 <Card.Header as="h5">{this.state.petInfo.name}</Card.Header>
+                                <Button className="delete-button" onClick={() => this.handleDelete(this.state.petInfo.id)} variant="danger" size="md">Eliminar mascota</Button>
+
                                 <ListGroup className="list-group-flush">
                                     <ListGroup.Item>{this.state.petInfo.species}</ListGroup.Item>
                                     <ListGroup.Item>{this.state.petInfo.breed}</ListGroup.Item>
