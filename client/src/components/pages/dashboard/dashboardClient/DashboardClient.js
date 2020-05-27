@@ -44,27 +44,35 @@ class DashboardClient extends Component {
         this.setState({ toast: toastCopy })
     }
 
-    getPetsFromClient = () => {
-        this.petService.getPetsFromClient(this.state.userInfo.id)
+    getPetsFromClient = (idClient) => {
+        this.petService.getPetsFromClient(idClient)
             .then(response => { console.log(response.data)
-                return this.setState({ userInfo: { pets: response.data }})})
+                return this.setState({ userInfo: { ...this.state.userInfo, pets: response.data }})})
             .catch(err => console.log(err))
     }
     
     finishPetCreate = () => {
-        this.getPetsFromClient()
+        this.getPetsFromClient(this.props.loggedInUser._id)
         this.handleModal(false)
         this.handletoast(true, 'Has creado una nueva mascota')
     }
 
     componentDidMount = () => {
-        this.getPetsFromClient()
+        this.getPetsFromClient(this.props.loggedInUser._id)
+    }
+
+    finishUpdatedPetPost = () => {
+        this.getPetsFromClient(this.props.loggedInUser._id)
+
     }
 
 
     render() {
 
-        console.log(this.state.userInfo.pets)
+        console.log(this.props.loggedInUser._id)
+
+        console.log(this.state.userInfo.id)
+
 
 
         return (
@@ -74,8 +82,16 @@ class DashboardClient extends Component {
 
                 <Button onClick={() => this.handleModal(true)} variant="dark">Crear nueva mascota</Button>
 
+                <Toast onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
+                    <Toast.Header>
+
+                        <strong className="mr-auto">Mensaje</strong>
+                    </Toast.Header>
+                    <Toast.Body>{this.state.toast.text}</Toast.Body>
+                </Toast>
+
                 
-                {this.state.userInfo.pets && this.state.userInfo.pets.map(pet =>  <PetCardClient key={pet._id} {...pet} />)}
+                {this.state.userInfo.pets && this.state.userInfo.pets.map(pet =>  <PetCardClient key={pet._id} {...pet} reloadPets={this.getPetsFromClient} finishUpdatePetPost={this.finishUpdatedPetPost} /> )}
 
                 </Container>
 
@@ -85,13 +101,7 @@ class DashboardClient extends Component {
                     </Modal.Body>
                 </Modal>
 
-                <Toast onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
-                    <Toast.Header>
 
-                        <strong className="mr-auto">Mensaje</strong>
-                    </Toast.Header>
-                    <Toast.Body>{this.state.toast.text}</Toast.Body>
-                </Toast>
 
 
 

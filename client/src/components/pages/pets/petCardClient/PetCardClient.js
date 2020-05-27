@@ -6,7 +6,7 @@ import CiteService from '../../../../service/cite.service'
 import QueryService from '../../../../service/query.service'
 import PetService from '../../../../service/pet.service'
 
-
+import UpdateFormPets from '../updatePets/UpdateFormPets'
 import QueryForm from '../../query/queryForm/QueryForm'
 
 import Container from 'react-bootstrap/Container'
@@ -32,6 +32,7 @@ class PetCardClient extends Component {
                 species: this.props.species,
                 breed: this.props.breed,
                 vetHospital: this.props.vetHospital,
+                owner: this.props.owner
 
             },
             cites: "",
@@ -42,7 +43,12 @@ class PetCardClient extends Component {
                 show: false,
                 text: ''
             },
-            modalShow: false
+            modal: {
+                show: false,
+                name: ''
+            }
+            // modalShow: false,
+
         }
         this.citeService = new CiteService()
         this.queryService = new QueryService()
@@ -50,12 +56,47 @@ class PetCardClient extends Component {
 
     }
 
-    handleModal = visible => this.setState({ modalShow: visible })
+    // handleModal = visible => this.setState({ modalShow: visible })
+
+    handleModal = (visible, modalName) => this.setState({ modal: { show: visible, name: modalName } })
+
     handletoast = (visible, text = '') => {
         const toastCopy = { ...this.state.toast }
         toastCopy.show = visible
         toastCopy.text = text
         this.setState({ toast: toastCopy })
+    }
+
+    displayModal = (modalName) => {
+        if (this.state.modal.show) {
+            switch (modalName) {
+                case "createQuery":
+                    return (
+                        <Modal.Body>
+                            <QueryForm
+                                finishQueryCreate={this.finishQueryPost}
+                                petId={this.state.petInfo.id}
+                                hospitalArr={this.props.vetHospital}
+                                closeModal={() => this.handleModal(false)} />
+                        </Modal.Body>
+                    )
+                case "editPet":
+                    return (
+                        <Modal.Body>
+                            <UpdateFormPets {...this.state} finishUpdatePet={this.props.finishUpdatePetPost} closeModal={() => this.handleModal(false)} />
+                        </Modal.Body>
+                        // <EditProject
+                        //     
+                        //     loggedInUser={this.state.loggedInUser}
+                        //     finishProject={this.finishProject}
+                        //     closeModal={() => this.handleModal(false)}
+                        // />
+
+                    )
+                default:
+                    return null
+            }
+        }
     }
 
     getQuerysInfo = () => {
@@ -74,6 +115,7 @@ class PetCardClient extends Component {
 
     handleDelete = (petId) => {
         this.petService.deletePet(petId)
+            .then(() => this.props.reloadPets())
             .catch(err => console.log(err))
     }
 
@@ -92,6 +134,7 @@ class PetCardClient extends Component {
 
 
     render() {
+
 
         return (
             <>
@@ -148,7 +191,9 @@ class PetCardClient extends Component {
 
 
                                 <Card.Footer>
-                                    <Button onClick={() => this.handleModal(true)} variant="dark" >Crear Consulta para {this.state.petInfo.name}</Button>
+                                    <Button onClick={() => this.handleModal(true, "createQuery")} variant="dark" >Crear Consulta para {this.state.petInfo.name}</Button>
+                                    <Button onClick={() => this.handleModal(true, "editPet")} variant="dark" >Actualizar mascota {this.state.petInfo.name}</Button>
+
 
                                 </Card.Footer>
                             </Card>
@@ -159,10 +204,14 @@ class PetCardClient extends Component {
 
                 </Container>
 
-                <Modal className="modal-window" show={this.state.modalShow} onHide={() => this.handleModal(false)}>
+                {/* <Modal className="modal-window" show={this.state.modalShow} onHide={() => this.handleModal(false)}>
                     <Modal.Body>
                         <QueryForm finishQueryCreate={this.finishQueryPost} petId={this.state.petInfo.id} hospitalArr={this.props.vetHospital} closeModal={() => this.handleModal(false)} />
                     </Modal.Body>
+                </Modal> */}
+
+                <Modal show={this.state.modal.show} onHide={() => this.handleModal(false)}>
+                    {this.displayModal(this.state.modal.name)}
                 </Modal>
 
                 <Toast className="toast-window" onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >

@@ -39,7 +39,10 @@ router.get('/petsFromClient/:idUser', ensureLoggedIn, (req, res, next) => {
         }
     ])
         .then(data => res.json(data))
-        .catch(err => next(new Error(err)))
+        .catch(err => {
+            console.log(err)
+            next(new Error(err))
+        })
 })
 
 router.get('/petDetails/:id', ensureLoggedIn, (req, res, next) => {
