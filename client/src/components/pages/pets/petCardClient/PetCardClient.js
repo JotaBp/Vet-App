@@ -83,14 +83,14 @@ class PetCardClient extends Component {
                 case "editPet":
                     return (
                         <Modal.Body>
-                            <UpdateFormPets {...this.state} finishUpdatePet={this.props.finishUpdatePetPost} closeModal={() => this.handleModal(false)} />
+                            <UpdateFormPets
+                                {...this.state}
+                                finishUpdatePet={this.props.finishUpdatePetPost}
+                                closeModal={() => this.handleModal(false)}
+                                index={this.props.index}
+                                updatePetInfo={this.props.updatePetInfo}
+                            />
                         </Modal.Body>
-                        // <EditProject
-                        //     
-                        //     loggedInUser={this.state.loggedInUser}
-                        //     finishProject={this.finishProject}
-                        //     closeModal={() => this.handleModal(false)}
-                        // />
 
                     )
                 default:
@@ -136,6 +136,8 @@ class PetCardClient extends Component {
     render() {
 
 
+        console.log(this.state.petInfo.vetHospital[0] && this.state.petInfo.vetHospital[0].username)
+
         return (
             <>
                 <Container as="section">
@@ -152,6 +154,7 @@ class PetCardClient extends Component {
                                 <ListGroup className="list-group-flush">
                                     <ListGroup.Item>{this.state.petInfo.species}</ListGroup.Item>
                                     <ListGroup.Item>{this.state.petInfo.breed}</ListGroup.Item>
+                                    <ListGroup.Item>Hospital de referencia: {this.state.petInfo.vetHospital[0] && this.state.petInfo.vetHospital[0].username}</ListGroup.Item>
                                 </ListGroup>
 
                                 <h4 className="query" >Consultas</h4>

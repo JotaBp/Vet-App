@@ -21,23 +21,23 @@ router.get('/petsFromClient/:idUser', ensureLoggedIn, (req, res, next) => {
             owner: req.params.idUser
         })
         .populate([{
-            path: "vetHospital",
-            model: "User"
-        },
-        {
-            path: "owner",
-            model: "User"
+                path: "vetHospital",
+                model: "User"
+            },
+            {
+                path: "owner",
+                model: "User"
 
-        },
-        {
-            path: "queryClient",
-            model: "QueryClient"
-        },
-        {
-            path: "citeHospital",
-            user: "CiteHospital"
-        }
-    ])
+            },
+            {
+                path: "queryClient",
+                model: "QueryClient"
+            },
+            {
+                path: "citeHospital",
+                user: "CiteHospital"
+            }
+        ])
         .then(data => res.json(data))
         .catch(err => {
             console.log(err)
@@ -92,10 +92,29 @@ router.post('/createPet', ensureLoggedIn, (req, res, next) => {
 
 router.post('/pet/:id/edit', ensureLoggedIn, (req, res, next) => {
 
-    Pet.findByIdAndUpdate(req.params.id, req.body, {
+    let updatedPetInfo
+    let newHospital = false
+
+    Pet.findById(req.params.id)
+        .then(foundPet => { console.log(`este es el foundPet?${foundPet}`)
+            req.body.vetHospital === foundPet.vetHospital ? newHospital = true : false})
+    Pet.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        .then(updatedPet => {
+            console.log("Esto sale de pet routes, del edicion pet")
+            console.log(updatedPet)
+            updatedPetInfo = updatedPet
+            res.json(updatedPet)})
+        .then(() => {
+            if(newHospital) {
+                User.findByIdAndUpdate(updatedPetInfo.vetHospital, {
+            $push: {
+                pets: updatedPet._id
+            }
+        }, {
             new: true
         })
-        .then(updatedPet => res.json(updatedPet))
+            }
+        })
         .catch(err => next(new Error(err)))
 })
 
@@ -120,4 +139,23 @@ module.exports = router
 //         .then(updatedPet => {
 //             res.json(`/api/petDetails/${updatedPet._id}`)})
 //         .catch(err => next(new Error(err)))
+// })
+
+
+
+
+// router.post('/pet/:id/edit', ensureLoggedIn, (req, res, next) => {
+
+// Pet.findByIdAndUpdate(req.params.id, req.body, {
+//         new: true
+//     })
+//     .then(updatedPet => User.findByIdAndUpdate(updatedPet.vetHospital, {
+//         $push: {
+//             pets: updatedPet._id
+//         }
+//     }, {
+//         new: true
+//     }))
+//     .then(updatedPet => res.json(updatedPet))
+//     .catch(err => next(new Error(err)))
 // })

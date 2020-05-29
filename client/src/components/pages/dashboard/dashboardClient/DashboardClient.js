@@ -18,7 +18,7 @@ class DashboardClient extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { 
+        this.state = {
             userInfo: {
                 id: this.props.loggedInUser._id,
                 pets: []
@@ -46,11 +46,13 @@ class DashboardClient extends Component {
 
     getPetsFromClient = (idClient) => {
         this.petService.getPetsFromClient(idClient)
-            .then(response => { console.log(response.data)
-                return this.setState({ userInfo: { ...this.state.userInfo, pets: response.data }})})
+            .then(response => {
+                console.log(response.data)
+                return this.setState({ userInfo: { ...this.state.userInfo, pets: response.data } })
+            })
             .catch(err => console.log(err))
     }
-    
+
     finishPetCreate = () => {
         this.getPetsFromClient(this.props.loggedInUser._id)
         this.handleModal(false)
@@ -66,32 +68,43 @@ class DashboardClient extends Component {
 
     }
 
+    updatePetInfo = (newPetInfo, idx) => {
+        const petsInfo = this.state.userInfo.pets
+        petsInfo[idx] = newPetInfo
+
+        this.setState({ userInfo: { ...this.state.userInfo, pets: petsInfo } })
+
+    }
+
 
     render() {
-
-        console.log(this.props.loggedInUser._id)
-
-        console.log(this.state.userInfo.id)
-
-
 
         return (
             <>
 
-                <Container as="section"  className="content-dashboard">
+                <Container as="section" className="content-dashboard">
 
-                <Button onClick={() => this.handleModal(true)} variant="dark">Crear nueva mascota</Button>
+                    <Button onClick={() => this.handleModal(true)} variant="dark">Crear nueva mascota</Button>
 
-                <Toast onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
-                    <Toast.Header>
+                    <Toast onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
+                        <Toast.Header>
 
-                        <strong className="mr-auto">Mensaje</strong>
-                    </Toast.Header>
-                    <Toast.Body>{this.state.toast.text}</Toast.Body>
-                </Toast>
+                            <strong className="mr-auto">Mensaje</strong>
+                        </Toast.Header>
+                        <Toast.Body>{this.state.toast.text}</Toast.Body>
+                    </Toast>
 
-                
-                {this.state.userInfo.pets && this.state.userInfo.pets.map(pet =>  <PetCardClient key={pet._id} {...pet} reloadPets={this.getPetsFromClient} finishUpdatePetPost={this.finishUpdatedPetPost} /> )}
+
+                    {this.state.userInfo.pets && this.state.userInfo.pets.map((pet, idx) =>{
+
+                        return (<PetCardClient
+                            index= {idx}
+                            key={pet._id} {...pet}
+                            reloadPets={() => this.getPetsFromClient(this.state.userInfo.id)}
+                            finishUpdatePetPost={this.finishUpdatedPetPost}
+                            updatePetInfo={this.updatePetInfo}
+                        />)
+                        })}
 
                 </Container>
 

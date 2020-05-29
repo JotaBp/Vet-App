@@ -61,7 +61,8 @@ router.get('/queryFromPet/:idPet', ensureLoggedIn, (req, res, next) => {
 
         ])
         .then(data => res.status(200).json(data))
-        .catch(err => next(new Error(err)))
+        .catch(err => {console.log(err)
+            return next(new Error(err))})
 })
 
 router.get('/queryDetails/:id', ensureLoggedIn, (req, res, next) => {
