@@ -36,7 +36,11 @@ class DashboardClient extends Component {
 
     }
 
-    handleModal = visible => this.setState({ modalShow: visible })
+    handleModal = visible => {
+        console.log(`esto es el handlemodal ${visible}`)
+        this.setState({ modalShow: visible })
+    }
+
     handletoast = (visible, text = '') => {
         const toastCopy = { ...this.state.toast }
         toastCopy.show = visible
@@ -47,7 +51,7 @@ class DashboardClient extends Component {
     getPetsFromClient = (idClient) => {
         this.petService.getPetsFromClient(idClient)
             .then(response => {
-                console.log(response.data)
+                console.log("esto es el acceso al servicio")
                 return this.setState({ userInfo: { ...this.state.userInfo, pets: response.data } })
             })
             .catch(err => console.log(err))
@@ -61,19 +65,6 @@ class DashboardClient extends Component {
 
     componentDidMount = () => {
         this.getPetsFromClient(this.props.loggedInUser._id)
-    }
-
-    finishUpdatedPetPost = () => {
-        this.getPetsFromClient(this.props.loggedInUser._id)
-
-    }
-
-    updatePetInfo = (newPetInfo, idx) => {
-        const petsInfo = this.state.userInfo.pets
-        petsInfo[idx] = newPetInfo
-
-        this.setState({ userInfo: { ...this.state.userInfo, pets: petsInfo } })
-
     }
 
 
@@ -100,9 +91,7 @@ class DashboardClient extends Component {
                         return (<PetCardClient
                             index= {idx}
                             key={pet._id} {...pet}
-                            reloadPets={() => this.getPetsFromClient(this.state.userInfo.id)}
-                            finishUpdatePetPost={this.finishUpdatedPetPost}
-                            updatePetInfo={this.updatePetInfo}
+
                         />)
                         })}
 

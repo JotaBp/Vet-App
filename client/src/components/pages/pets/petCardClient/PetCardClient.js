@@ -47,7 +47,6 @@ class PetCardClient extends Component {
                 show: false,
                 name: ''
             }
-            // modalShow: false,
 
         }
         this.citeService = new CiteService()
@@ -56,9 +55,10 @@ class PetCardClient extends Component {
 
     }
 
-    // handleModal = visible => this.setState({ modalShow: visible })
 
-    handleModal = (visible, modalName) => this.setState({ modal: { show: visible, name: modalName } })
+    handleModal = (visible, modalName) => {
+        console.log(`handlemodal depetcarclient ${visible}`)
+        this.setState({ modal: { show: visible, name: modalName } })}
 
     handletoast = (visible, text = '') => {
         const toastCopy = { ...this.state.toast }
@@ -66,6 +66,52 @@ class PetCardClient extends Component {
         toastCopy.text = text
         this.setState({ toast: toastCopy })
     }
+
+    getQuerysInfo = () => {
+        this.queryService.queryFromPet(this.props._id)
+            .then(response => {
+                return this.setState({ querys: response.data })
+            })
+            .catch(err => console.log(err))
+    }
+
+    getCitesInfo = () => {
+        this.citeService.citesFromPet(this.props._id)
+            .then(response => this.setState({ cites: response.data }))
+            .catch(err => console.log(err))
+    }
+
+    getPetDetailsInfo = () => {
+        this.petService.getPetDetails(this.props._id)
+            .then(response => this.setState({ petInfo: response.data }))
+            .catch(err => console.log(err))
+    }
+
+    handleDelete = (petId) => {
+        this.petService.deletePet(petId)
+            .then(() => this.props.reloadPets())
+            .catch(err => console.log(err))
+    }
+
+    finishQueryPost = () => {
+        this.getQuerysInfo()
+        this.handleModal(false)
+        this.handletoast(true, 'Consulta enviada al Hospital')
+    }
+
+    finishUpdatedPetPost = () => {
+        console.log("entra")
+        this.getPetDetailsInfo()
+        this.handleModal(false)
+        this.handletoast(true, 'Has actualizado la mascota')
+
+    }
+
+    componentDidMount = () => {
+        this.getQuerysInfo()
+        this.getCitesInfo()
+    }
+
 
     displayModal = (modalName) => {
         if (this.state.modal.show) {
@@ -84,11 +130,11 @@ class PetCardClient extends Component {
                     return (
                         <Modal.Body>
                             <UpdateFormPets
-                                {...this.state}
-                                finishUpdatePet={this.props.finishUpdatePetPost}
+                                propsPetCardClient={this.props}
+                                statePetCardClient={this.state}
+                                finishUpdatePet={this.finishUpdatedPetPost}
                                 closeModal={() => this.handleModal(false)}
-                                index={this.props.index}
-                                updatePetInfo={this.props.updatePetInfo}
+
                             />
                         </Modal.Body>
 
@@ -99,44 +145,8 @@ class PetCardClient extends Component {
         }
     }
 
-    getQuerysInfo = () => {
-        this.queryService.queryFromPet(this.props._id)
-            .then(response => {
-                return this.setState({ querys: response.data })
-            })
-            .catch(err => console.log(err))
-    }
-
-    getCitesInfo = () => {
-        this.citeService.citesFromPet(this.props._id)
-            .then(response => this.setState({ cites: response.data }))
-            .catch(err => console.log(err))
-    }
-
-    handleDelete = (petId) => {
-        this.petService.deletePet(petId)
-            .then(() => this.props.reloadPets())
-            .catch(err => console.log(err))
-    }
-
-    finishQueryPost = () => {
-        this.getQuerysInfo()
-        this.handleModal(false)
-        this.handletoast(true, 'Consulta enviada al Hospital')
-    }
-
-    componentDidMount = () => {
-        this.getQuerysInfo()
-        this.getCitesInfo()
-    }
-
-    //Falla el delete y el create, se crean y se eliminan los registros, pero no se actuliza la pagina en el momento en el que se produce la accion
-
-
     render() {
 
-
-        console.log(this.state.petInfo.vetHospital[0] && this.state.petInfo.vetHospital[0].username)
 
         return (
             <>
@@ -206,12 +216,6 @@ class PetCardClient extends Component {
                     </Row>
 
                 </Container>
-
-                {/* <Modal className="modal-window" show={this.state.modalShow} onHide={() => this.handleModal(false)}>
-                    <Modal.Body>
-                        <QueryForm finishQueryCreate={this.finishQueryPost} petId={this.state.petInfo.id} hospitalArr={this.props.vetHospital} closeModal={() => this.handleModal(false)} />
-                    </Modal.Body>
-                </Modal> */}
 
                 <Modal show={this.state.modal.show} onHide={() => this.handleModal(false)}>
                     {this.displayModal(this.state.modal.name)}
