@@ -50,10 +50,7 @@ class DashboardClient extends Component {
 
     getPetsFromClient = (idClient) => {
         this.petService.getPetsFromClient(idClient)
-            .then(response => {
-                console.log("esto es el acceso al servicio")
-                return this.setState({ userInfo: { ...this.state.userInfo, pets: response.data } })
-            })
+            .then(response =>  this.setState({ userInfo: { ...this.state.userInfo, pets: response.data } }))
             .catch(err => console.log(err))
     }
 
@@ -77,7 +74,7 @@ class DashboardClient extends Component {
 
                     <Button onClick={() => this.handleModal(true)} variant="dark">Crear nueva mascota</Button>
 
-                    <Toast onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
+                    <Toast className="toast-window" onClose={() => this.handletoast(false)} show={this.state.toast.show} delay={3000} >
                         <Toast.Header>
 
                             <strong className="mr-auto">Mensaje</strong>
@@ -91,6 +88,7 @@ class DashboardClient extends Component {
                         return (<PetCardClient
                             index= {idx}
                             key={pet._id} {...pet}
+                            reloadPets={() => this.getPetsFromClient(this.state.userInfo.id)}
 
                         />)
                         })}

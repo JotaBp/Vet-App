@@ -57,7 +57,6 @@ class PetCardClient extends Component {
 
 
     handleModal = (visible, modalName) => {
-        console.log(`handlemodal depetcarclient ${visible}`)
         this.setState({ modal: { show: visible, name: modalName } })}
 
     handletoast = (visible, text = '') => {
@@ -100,7 +99,6 @@ class PetCardClient extends Component {
     }
 
     finishUpdatedPetPost = () => {
-        console.log("entra")
         this.getPetDetailsInfo()
         this.handleModal(false)
         this.handletoast(true, 'Has actualizado la mascota')
@@ -146,6 +144,7 @@ class PetCardClient extends Component {
     }
 
     render() {
+        console.log(this.props.vetHospital)
 
 
         return (

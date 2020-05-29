@@ -21,7 +21,7 @@ class UpdateFormPets extends Component {
                 petPicPath: this.props.statePetCardClient.petInfo.petPicPath,
                 breed: this.props.statePetCardClient.petInfo.breed,
                 owner: this.props.statePetCardClient.petInfo.owner._id,
-                vetHospital: !this.props.statePetCardClient.petInfo.vetHospital[0]._id ? " " : this.props.statePetCardClient.petInfo.vetHospital[0]._id
+                vetHospital: this.props.statePetCardClient.petInfo.vetHospital[0]._id ? this.props.statePetCardClient.petInfo.vetHospital[0]._id : this.props.statePetCardClient.petInfo.vetHospital[0]._id = "5ec698517f1ec422d7ec01d8"
             },
             vetHospitals: null,
 
@@ -108,7 +108,7 @@ class UpdateFormPets extends Component {
                         <Form.Group controlId="select-hospital">
                             <Form.Label>Selecciona hospital</Form.Label>
                             <Form.Control as="select" name="vetHospital" value={this.state.petUpdated.vetHospital} onChange={this.handleInputChange} >
-                                <option value={this.props.statePetCardClient.petInfo.vetHospital[0]._id}>{this.props.statePetCardClient.petInfo.vetHospital[0].username}</option>
+                                <option value={this.state.petUpdated.vetHospital._id}>{this.state.petUpdated.vetHospital.username}</option>
                                 {this.state.vetHospitals && this.state.vetHospitals.map(hospital => {
                                     return (<option key={hospital._id} value={hospital._id}>{hospital.username}</option>)
                                 })}
